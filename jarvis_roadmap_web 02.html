@@ -6,7 +6,7 @@
     <title>Jarvis Frontend Roadmap</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
         
         * {
             margin: 0;
@@ -15,9 +15,9 @@
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            font-family: 'Rajdhani', 'Orbitron', monospace;
+            background: #0a0a0a;
+            color: #00ff9f;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -31,11 +31,43 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 159, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0, 255, 255, 0.08) 0%, transparent 50%),
+                linear-gradient(90deg, transparent 0%, rgba(0, 255, 159, 0.02) 50%, transparent 100%);
             pointer-events: none;
             z-index: -1;
+            animation: backgroundPulse 4s ease-in-out infinite alternate;
+        }
+
+        /* Cyberpunk scan lines effect */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 159, 0.03) 2px,
+                rgba(0, 255, 159, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 2s linear infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
         }
 
         .container {
@@ -43,13 +75,16 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
+        /* Cyberpunk Sidebar */
         .sidebar {
             width: 350px;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 0 50px rgba(0, 255, 159, 0.3),
+                inset 0 0 50px rgba(0, 255, 159, 0.05);
+            border-right: 2px solid #00ff9f;
+            border-image: linear-gradient(180deg, #00ff9f 0%, #ff00ff 50%, #00ffff 100%) 1;
             overflow-y: auto;
             position: relative;
         }
@@ -61,17 +96,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            background: 
+                linear-gradient(180deg, rgba(0, 255, 159, 0.1) 0%, rgba(0, 255, 159, 0.02) 100%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 255, 159, 0.02) 10px,
+                    rgba(0, 255, 159, 0.02) 20px
+                );
             pointer-events: none;
         }
 
         .sidebar-header {
             padding: 2.5rem 2rem;
             text-align: center;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
+            background: linear-gradient(135deg, #001122 0%, #002244 100%);
+            color: #00ff9f;
             position: relative;
             overflow: hidden;
+            border-bottom: 2px solid #00ff9f;
+            box-shadow: 0 4px 20px rgba(0, 255, 159, 0.3);
         }
 
         .sidebar-header::before {
@@ -81,34 +126,67 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
+            background: 
+                radial-gradient(circle, rgba(0, 255, 159, 0.1) 0%, transparent 70%),
+                radial-gradient(circle, rgba(255, 0, 255, 0.1) 30%, transparent 70%);
+            animation: cyberpunkFloat 8s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        @keyframes cyberpunkFloat {
+            0%, 100% { 
+                transform: translate(-50%, -50%) rotate(0deg);
+                opacity: 0.5;
+            }
+            50% { 
+                transform: translate(-50%, -50%) rotate(180deg);
+                opacity: 0.8;
+            }
         }
 
         .sidebar-header h1 {
-            font-size: 2rem;
-            font-weight: 800;
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 900;
             margin-bottom: 0.75rem;
             position: relative;
             z-index: 1;
+            text-shadow: 
+                0 0 10px #00ff9f,
+                0 0 20px #00ff9f,
+                0 0 30px #00ff9f;
+            animation: textGlow 2s ease-in-out infinite alternate;
         }
 
         .sidebar-header p {
             opacity: 0.95;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             position: relative;
             z-index: 1;
+            text-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @keyframes textGlow {
+            0% { 
+                text-shadow: 
+                    0 0 10px #00ff9f,
+                    0 0 20px #00ff9f,
+                    0 0 30px #00ff9f;
+            }
+            100% { 
+                text-shadow: 
+                    0 0 20px #00ff9f,
+                    0 0 30px #00ff9f,
+                    0 0 40px #00ff9f,
+                    0 0 50px #00ff9f;
+            }
         }
 
         .menu-item {
             padding: 1.25rem 1.75rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(0, 255, 159, 0.1);
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             display: flex;
@@ -116,8 +194,12 @@
             gap: 1.25rem;
             position: relative;
             margin: 0.25rem 0.75rem;
-            border-radius: 12px;
+            border-radius: 0px;
             border-bottom: none;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 159, 0.2);
+            color: #00ff9f;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 100%, 0 100%);
         }
 
         .menu-item::before {
@@ -128,74 +210,170 @@
             width: 4px;
             height: 100%;
             background: transparent;
-            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #00ff9f;
+        }
+
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 255, 159, 0.3) 100%);
             transition: all 0.3s ease;
         }
 
         .menu-item:hover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: rgba(0, 255, 159, 0.1);
+            color: #00ffff;
             transform: translateX(8px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
+            box-shadow: 
+                0 0 25px rgba(0, 255, 159, 0.4),
+                inset 0 0 25px rgba(0, 255, 159, 0.1);
+            border-color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
         }
 
         .menu-item:hover::before {
-            background: rgba(255, 255, 255, 0.8);
+            background: #00ffff;
+            box-shadow: 
+                0 0 20px #00ffff,
+                0 0 30px #00ffff;
+        }
+
+        .menu-item:hover::after {
+            width: 100%;
         }
 
         .menu-item.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: rgba(255, 0, 255, 0.15);
+            color: #ff00ff;
             transform: translateX(8px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.5),
+                inset 0 0 30px rgba(255, 0, 255, 0.1);
+            border-color: #ff00ff;
+            text-shadow: 
+                0 0 10px #ff00ff,
+                0 0 20px #ff00ff;
         }
 
         .menu-item.active::before {
-            background: #4facfe;
+            background: #ff00ff;
+            box-shadow: 
+                0 0 20px #ff00ff,
+                0 0 30px #ff00ff,
+                0 0 40px #ff00ff;
+        }
+
+        .menu-item.active::after {
+            width: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 0, 255, 0.3) 100%);
         }
 
         .menu-item i {
             font-size: 1.2rem;
             width: 24px;
             text-align: center;
+            filter: drop-shadow(0 0 10px currentColor);
         }
 
         .menu-item-content h3 {
+            font-family: 'Orbitron', monospace;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.25rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .menu-item-content p {
             font-size: 0.8rem;
             opacity: 0.8;
+            letter-spacing: 0.5px;
         }
 
-        /* Main Content */
+        /* Cyberpunk Main Content */
         .main-content {
             flex: 1;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
             overflow-y: auto;
+            position: relative;
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 100px,
+                    rgba(0, 255, 159, 0.02) 100px,
+                    rgba(0, 255, 159, 0.02) 101px
+                );
+            pointer-events: none;
         }
 
         .content-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
             padding: 2rem;
-            border-radius: 20px;
+            border-radius: 0px;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 0 50px rgba(0, 255, 159, 0.3),
+                inset 0 0 50px rgba(0, 255, 159, 0.05);
+            border: 2px solid #00ff9f;
+            border-image: linear-gradient(45deg, #00ff9f 0%, #00ffff 50%, #ff00ff 100%) 1;
+            position: relative;
+            clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+        }
+
+        .content-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, rgba(0, 255, 159, 0.1) 0%, transparent 50%, rgba(255, 0, 255, 0.1) 100%);
+            pointer-events: none;
         }
 
         .content-header h2 {
+            font-family: 'Orbitron', monospace;
             font-size: 2.5rem;
-            font-weight: 700;
+            font-weight: 900;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #00ff9f;
+            text-shadow: 
+                0 0 10px #00ff9f,
+                0 0 20px #00ff9f,
+                0 0 30px #00ff9f;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-header p {
+            color: #00ffff;
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
         }
 
         .content-grid {
@@ -205,15 +383,18 @@
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(20px);
-            border-radius: 24px;
+            border-radius: 0px;
             padding: 2.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 159, 0.2),
+                inset 0 0 30px rgba(0, 255, 159, 0.05);
+            border: 2px solid rgba(0, 255, 159, 0.3);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
         }
 
         .feature-card::before {
@@ -223,14 +404,43 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            background: 
+                linear-gradient(135deg, rgba(0, 255, 159, 0.1) 0%, transparent 50%, rgba(255, 0, 255, 0.05) 100%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(0, 255, 159, 0.02) 20px,
+                    rgba(0, 255, 159, 0.02) 21px
+                );
             pointer-events: none;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff9f, #00ffff, #ff00ff, #00ff9f);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 
+                0 0 50px rgba(0, 255, 159, 0.4),
+                0 0 100px rgba(0, 255, 159, 0.2),
+                inset 0 0 50px rgba(0, 255, 159, 0.1);
+            border-color: #00ffff;
+        }
+
+        .feature-card:hover::after {
+            opacity: 0.3;
         }
 
         .feature-header {
@@ -252,15 +462,21 @@
         }
 
         .feature-header h3 {
+            font-family: 'Orbitron', monospace;
             font-size: 1.3rem;
-            font-weight: 600;
-            color: #333;
+            font-weight: 700;
+            color: #00ff9f;
+            text-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .feature-description {
-            color: #666;
+            color: #00ffff;
             line-height: 1.6;
             margin-bottom: 1.5rem;
+            font-weight: 500;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
         }
 
         .mockup {
@@ -324,33 +540,87 @@
         .welcome-screen {
             text-align: center;
             padding: 4rem 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff9f;
+            box-shadow: 
+                0 0 50px rgba(0, 255, 159, 0.3),
+                inset 0 0 50px rgba(0, 255, 159, 0.1);
+            clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 40px 100%, 0 calc(100% - 40px));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 159, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .welcome-screen h2 {
-            font-size: 3rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #00ff9f;
+            text-shadow: 
+                0 0 20px #00ff9f,
+                0 0 40px #00ff9f,
+                0 0 60px #00ff9f;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            animation: cyberpunkGlow 3s ease-in-out infinite alternate;
         }
 
         .welcome-screen p {
             font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 600px;
+            color: #00ffff;
+            max-width: 700px;
             margin: 0 auto;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+            line-height: 1.8;
         }
 
-        /* Enhanced content sections */
+        @keyframes cyberpunkGlow {
+            0% { 
+                text-shadow: 
+                    0 0 20px #00ff9f,
+                    0 0 40px #00ff9f,
+                    0 0 60px #00ff9f;
+            }
+            100% { 
+                text-shadow: 
+                    0 0 30px #00ff9f,
+                    0 0 60px #00ff9f,
+                    0 0 90px #00ff9f,
+                    0 0 120px #00ff9f;
+            }
+        }
+
+        /* Cyberpunk enhanced content sections */
         .user-story-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: rgba(0, 0, 0, 0.9);
+            color: #00ff9f;
             padding: 1.5rem;
-            border-radius: 16px;
+            border-radius: 0px;
             margin: 1.5rem 0;
             position: relative;
             overflow: hidden;
+            border: 2px solid #00ff9f;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 159, 0.3),
+                inset 0 0 30px rgba(0, 255, 159, 0.1);
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
         }
 
         .user-story-section::before {
@@ -360,16 +630,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(0, 255, 159, 0.2) 0%, transparent 70%),
+                linear-gradient(45deg, rgba(0, 255, 159, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .user-story-section h4 {
+            font-family: 'Orbitron', monospace;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 0.75rem;
             position: relative;
             z-index: 1;
+            text-shadow: 0 0 10px #00ff9f;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .user-story-section p {
@@ -378,20 +654,30 @@
             opacity: 0.95;
             position: relative;
             z-index: 1;
+            text-shadow: 0 0 5px rgba(0, 255, 159, 0.5);
         }
 
         .invest-section {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
+            background: rgba(0, 0, 0, 0.9);
+            color: #ff00ff;
             padding: 1.5rem;
-            border-radius: 16px;
+            border-radius: 0px;
             margin: 1.5rem 0;
+            border: 2px solid #ff00ff;
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.3),
+                inset 0 0 30px rgba(255, 0, 255, 0.1);
+            clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
         }
 
         .invest-section h4 {
+            font-family: 'Orbitron', monospace;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1rem;
+            text-shadow: 0 0 10px #ff00ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .invest-grid {
@@ -401,49 +687,86 @@
         }
 
         .invest-item {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 0, 255, 0.15);
             padding: 1rem;
-            border-radius: 12px;
+            border-radius: 0px;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .invest-item:hover {
+            background: rgba(255, 0, 255, 0.25);
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
         }
 
         .invest-item strong {
             display: block;
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            letter-spacing: 1px;
         }
 
         .invest-item span {
             font-size: 0.85rem;
             opacity: 0.9;
+            color: #ffaaff;
         }
 
         .criteria-section {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
+            background: rgba(0, 0, 0, 0.9);
+            color: #00ffff;
             padding: 1.5rem;
-            border-radius: 16px;
+            border-radius: 0px;
             margin: 1.5rem 0;
+            border: 2px solid #00ffff;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.3),
+                inset 0 0 30px rgba(0, 255, 255, 0.1);
+            clip-path: polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
         }
 
         .criteria-section h4 {
+            font-family: 'Orbitron', monospace;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1rem;
+            text-shadow: 0 0 10px #00ffff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .scenario {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(0, 255, 255, 0.15);
             padding: 1rem;
-            border-radius: 12px;
+            border-radius: 0px;
             margin-bottom: 1rem;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+        }
+
+        .scenario:hover {
+            background: rgba(0, 255, 255, 0.25);
+            border-color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
         }
 
         .scenario h5 {
+            font-family: 'Orbitron', monospace;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.75rem;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+            letter-spacing: 1px;
         }
 
         .scenario-step {
@@ -451,6 +774,9 @@
             margin: 0.25rem 0;
             padding-left: 1rem;
             opacity: 0.95;
+            color: #aaffff;
+            border-left: 2px solid rgba(0, 255, 255, 0.3);
+            padding-left: 1rem;
         }
 
         .expandable-section {
@@ -570,6 +896,7 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
         }
 
+        /* Cyberpunk responsive design */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -578,10 +905,41 @@
             .sidebar {
                 width: 100%;
                 height: auto;
+                border-right: none;
+                border-bottom: 2px solid #00ff9f;
             }
 
             .content-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .welcome-screen h2 {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+
+            .content-header h2 {
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .menu-item {
+                clip-path: none;
+                border-radius: 0;
+                border: 1px solid rgba(0, 255, 159, 0.3);
+            }
+
+            .feature-card {
+                clip-path: none;
+                border-radius: 0;
+            }
+
+            body::after {
+                display: none; /* Hide scan lines on mobile for performance */
             }
 
             .invest-grid {
@@ -828,41 +1186,6 @@
                         <p>Sistema completo de autenticación con seguridad avanzada</p>
                     </div>
 
-                    <div class="user-story-section">
-                        <h4>👤 User Story</h4>
-                        <p><strong>Como usuario</strong>, quiero crear mi cuenta e iniciar sesión de forma segura, <strong>para poder</strong> acceder a mis análisis y retomar mi trabajo sin interrupciones.</p>
-                    </div>
-
-                    <div class="invest-section">
-                        <h4>📋 Criterios INVEST</h4>
-                        <div class="invest-grid">
-                            <div class="invest-item">
-                                <strong>Independiente</strong>
-                                <span>No depende de otras funcionalidades</span>
-                            </div>
-                            <div class="invest-item">
-                                <strong>Negociable</strong>
-                                <span>El alcance de 2FA o CAPTCHA puede ajustarse</span>
-                            </div>
-                            <div class="invest-item">
-                                <strong>Valiosa</strong>
-                                <span>Sin autenticación segura, la app no tiene valor</span>
-                            </div>
-                            <div class="invest-item">
-                                <strong>Estimable</strong>
-                                <span>Alcance claro para estimar esfuerzo</span>
-                            </div>
-                            <div class="invest-item">
-                                <strong>Pequeña</strong>
-                                <span>Registro, login y logout pueden implementarse por separado</span>
-                            </div>
-                            <div class="invest-item">
-                                <strong>Testable</strong>
-                                <span>Los criterios Gherkin definen qué validar</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="content-grid">
                         <div class="feature-card">
                             <div class="feature-header">
@@ -994,6 +1317,41 @@
                         </div>
                     </div>
 
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero crear mi cuenta e iniciar sesión de forma segura, <strong>para poder</strong> acceder a mis análisis y retomar mi trabajo sin interrupciones.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>No depende de otras funcionalidades</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>El alcance de 2FA o CAPTCHA puede ajustarse</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Sin autenticación segura, la app no tiene valor</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Alcance claro para estimar esfuerzo</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Registro, login y logout pueden implementarse por separado</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Los criterios Gherkin definen qué validar</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="criteria-section">
                         <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
                         
@@ -1031,11 +1389,9 @@
                 workspace: `
                     <div class="content-header">
                         <h2><i class="fas fa-folder-open"></i> Espacios de Trabajo / Proyectos</h2>
-                        <p>Organización y gestión de proyectos de análisis</p>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
-                            <strong>User Story:</strong> Como analista, quiero crear y organizar varios espacios de trabajo, para separar clientes o líneas de análisis y mantener todo ordenado.
-                        </div>
+                        <p>Gestión completa de proyectos y organización de contenido</p>
                     </div>
+                    
                     <div class="content-grid">
                         <div class="feature-card">
                             <div class="feature-header">
@@ -1149,16 +1505,81 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como analista</strong>, quiero crear y organizar varios espacios de trabajo, <strong>para</strong> separar clientes o líneas de análisis y mantener todo ordenado.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>Operación CRUD sin depender de otros módulos</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Límite de proyectos y tags</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Organización clara por caso de uso</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>CRUD y filtros bien delimitados</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Crear, editar, eliminar como historias separadas</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Criterios Gherkin aplicables</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>✅ Escenario: Crear proyecto</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el analista está en la vista de proyectos</div>
+                            <div class="scenario-step"><strong>Cuando</strong> hace clic en "Nuevo proyecto" y completa campos válidos</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el proyecto aparece en la lista</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>❌ Escenario: Crear proyecto sin nombre</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el analista abre el modal de nuevo proyecto</div>
+                            <div class="scenario-step"><strong>Cuando</strong> deja el nombre vacío y confirma</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "El nombre es obligatorio" inline</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔄 Escenario: Clonar proyecto</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que existe un proyecto en la lista</div>
+                            <div class="scenario-step"><strong>Cuando</strong> selecciona "Clonar"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> aparece copia con sufijo "-copia"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🚫 Escenario: Renombrar a nombre duplicado</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que hay un proyecto llamado "X"</div>
+                            <div class="scenario-step"><strong>Cuando</strong> renombra otro a "X"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Ya existe un proyecto con ese nombre"</div>
+                        </div>
+                    </div>
                 `,
 
                 data: `
                     <div class="content-header">
                         <h2><i class="fas fa-database"></i> Conexión & Orquestación de Datos</h2>
                         <p>Gestión completa de fuentes de datos y automatización</p>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
-                            <strong>User Story:</strong> Como usuario, quiero definir de dónde vienen mis datos y con qué frecuencia se actualizan, para asegurar dashboards siempre actualizados.
-                        </div>
                     </div>
+                    
                     <div class="content-grid">
                         <div class="feature-card">
                             <div class="feature-header">
@@ -1273,6 +1694,73 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero definir de dónde vienen mis datos y con qué frecuencia se actualizan, <strong>para</strong> asegurar dashboards siempre actualizados.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>Wizard y monitor desacoplados</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Alcance de frecuencias</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Automatiza refresh</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Mostrar conexión y listado por separado</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Configuración, scheduling y monitor</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Prueba de conexión y visibilidad de jobs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>✅ Escenario: Probar conexión exitosa</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario completó datos de conexión válidos</div>
+                            <div class="scenario-step"><strong>Cuando</strong> hace clic en "Probar conexión"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Conexión exitosa" inline</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>❌ Escenario: Probar conexión fallida</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que los datos son inválidos</div>
+                            <div class="scenario-step"><strong>Cuando</strong> hace clic en "Probar conexión"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Error: host no encontrado" inline</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>📅 Escenario: Crear job diario</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que la conexión está configurada</div>
+                            <div class="scenario-step"><strong>Cuando</strong> selecciona "Diaria" y confirma</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el job aparece en la lista con etiqueta "Diaria"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🗑️ Escenario: Eliminar job</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que hay un job activo</div>
+                            <div class="scenario-step"><strong>Cuando</strong> hace clic en "Eliminar"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> desaparece de la lista</div>
                         </div>
                     </div>
                 `,
@@ -1426,8 +1914,36 @@
                     <div class="content-header">
                         <h2><i class="fas fa-comments"></i> Interfaz de Chat IA</h2>
                         <p>Conversación natural con tus datos para obtener insights inmediatos</p>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
-                            <strong>User Story:</strong> Como usuario, quiero conversar en lenguaje natural con mis datos, para obtener insights rápidos sin navegar menús.
+                    </div>
+                    
+                    <div class="content-grid">
+                        
+                        <div class="scenario">
+                            <h5>Escenario: Respuesta de texto</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario envía consulta válida</div>
+                            <div class="scenario-step"><strong>Cuando</strong> recibe respuesta</div>
+                            <div class="scenario-step"><strong>Entonces</strong> aparece bloque de texto</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>Escenario: Respuesta de gráfico y tabla</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que la consulta retorna datos tabulares</div>
+                            <div class="scenario-step"><strong>Cuando</strong> se procesan</div>
+                            <div class="scenario-step"><strong>Entonces</strong> tabla y gráfico se muestran</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>Escenario: Error de red</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que hay problema de conexión</div>
+                            <div class="scenario-step"><strong>Cuando</strong> envía consulta</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Error… Reintenta" banner</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>Escenario: Refinamiento</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que la respuesta ofrece "¿Más detalle?"</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario lo selecciona</div>
+                            <div class="scenario-step"><strong>Entonces</strong> se envía consulta extendida</div>
                         </div>
                     </div>
                     <div class="content-grid">
@@ -1561,6 +2077,73 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero conversar en lenguaje natural con mis datos, <strong>para</strong> obtener insights rápidos sin navegar menús.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>No requiere proyectos ni orquestación</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Tipos de respuestas</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Simplifica análisis</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Input y render</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Envío y distintas respuestas</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Ver recursos y errores</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>📝 Escenario: Respuesta de texto</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario envía consulta válida</div>
+                            <div class="scenario-step"><strong>Cuando</strong> recibe respuesta</div>
+                            <div class="scenario-step"><strong>Entonces</strong> aparece bloque de texto</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>📊 Escenario: Respuesta de gráfico y tabla</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que la consulta retorna datos tabulares</div>
+                            <div class="scenario-step"><strong>Cuando</strong> se procesan</div>
+                            <div class="scenario-step"><strong>Entonces</strong> tabla y gráfico se muestran</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>❌ Escenario: Error de red</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que hay problema de conexión</div>
+                            <div class="scenario-step"><strong>Cuando</strong> envía consulta</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Error… Reintenta" banner</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔍 Escenario: Refinamiento</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que la respuesta ofrece "¿Más detalle?"</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario lo selecciona</div>
+                            <div class="scenario-step"><strong>Entonces</strong> se envía consulta extendida</div>
+                        </div>
+                    </div>
                 `,
 
                 dashboard: `
@@ -1568,6 +2151,7 @@
                         <h2><i class="fas fa-chart-line"></i> Manejo de Reportes & Dashboards</h2>
                         <p>Construcción visual de dashboards con control de versiones</p>
                     </div>
+                    
                     <div class="content-grid">
                         <div class="feature-card">
                             <div class="feature-header">
@@ -1594,16 +2178,81 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como analista</strong>, quiero arrastrar widgets para armar dashboards y guardar múltiples versiones, <strong>para</strong> comparar diferentes diseños y revertir cambios.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>No requiere conexión de datos</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Número de versiones retencionable</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Permite A/B testing de visualizaciones</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Drag-and-drop y guardado de versión separados</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Historia de diseño y de guardado</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Drag, guardado y revert comprobables</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>🖱️ Escenario: Arrastrar y soltar un widget</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario ve la paleta de widgets</div>
+                            <div class="scenario-step"><strong>Cuando</strong> arrastra un widget al lienzo</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el widget aparece en la posición deseada</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>💾 Escenario: Guardar una versión</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el dashboard tiene widgets en el lienzo</div>
+                            <div class="scenario-step"><strong>Cuando</strong> hace clic en "Guardar dashboard" y confirma nombre</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve snackbar "Dashboard guardado" con versión 1</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>⏪ Escenario: Revertir a versión anterior</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que existen al menos dos versiones guardadas</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario selecciona versión 1 en el dropdown</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el lienzo se actualiza a la configuración de la versión 1</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🏷️ Escenario: Etiquetar un dashboard</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el modal de guardado está abierto</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario añade etiqueta "Ventas" y confirma</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el dashboard muestra la etiqueta "Ventas"</div>
+                        </div>
+                    </div>
                 `,
 
                 visualization: `
                     <div class="content-header">
                         <h2><i class="fas fa-chart-bar"></i> Visualización Dinámica de Datos</h2>
                         <p>Gráficos interactivos con configuración avanzada</p>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
-                            <strong>User Story:</strong> Como analista, quiero seleccionar distintos tipos de gráficos y ajustar sus propiedades, para comunicar mis insights de forma óptima.
-                        </div>
                     </div>
+                    
                     <div class="content-grid">
                         <div class="feature-card">
                             <div class="feature-header">
@@ -1721,16 +2370,81 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como analista</strong>, quiero seleccionar distintos tipos de gráficos y ajustar sus propiedades, <strong>para</strong> comunicar mis insights de forma óptima.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>Funciona sin chat ni proyectos</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Conjunto de tipos de gráficos</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Mejora la comunicación de datos</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Selección y configuración por separado</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Tipo de gráfico y configuración</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Opciones verificables</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>📈 Escenario: Seleccionar gráfico de líneas</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el panel de tipos de gráfico esté visible</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario elige "Líneas"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el gráfico cambia a tipo líneas con datos cargados</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>⚙️ Escenario: Ajustar leyenda y título</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el gráfico esté renderizado</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario modifica el campo "Título" en el panel lateral</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el título del gráfico se actualiza en vivo</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔍 Escenario: Zoom interactivo</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el gráfico muestra ejes con valores</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario arrastra para hacer zoom</div>
+                            <div class="scenario-step"><strong>Entonces</strong> la vista se acota al rango seleccionado</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔄 Escenario: Restablecer vista</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario ha hecho zoom</div>
+                            <div class="scenario-step"><strong>Cuando</strong> presiona "Reset view"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el gráfico vuelve a la vista completa original</div>
+                        </div>
+                    </div>
                 `,
 
                 carousel: `
                     <div class="content-header">
                         <h2><i class="fas fa-images"></i> Tarjetas de Contenido en Carrusel</h2>
                         <p>Galería de templates y propuestas de visualización</p>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
-                            <strong>User Story:</strong> Como usuario, quiero recibir varias propuestas de visualización basadas en mi pregunta al chat, presentadas en tarjetas dentro de un carrusel, para elegir la opción más adecuada y luego personalizarla a mi gusto.
-                        </div>
                     </div>
+                    
                     <div class="content-grid">
                         <div class="feature-card">
                             <div class="feature-header">
@@ -1823,16 +2537,81 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero recibir varias propuestas de visualización basadas en mi pregunta al chat, presentadas en tarjetas dentro de un carrusel, <strong>para</strong> elegir la opción más adecuada y luego personalizarla a mi gusto.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>No interactúa con otros bloques</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Número de templates inicial</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Acelera la exploración de alternativas</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Galería y navegación bien delimitados</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Carga de propuestas</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Número de cards y mensajes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>📊 Escenario: Mostrar al menos 3 propuestas</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario envía una consulta al chat</div>
+                            <div class="scenario-step"><strong>Cuando</strong> las propuestas llegan</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el carrusel muestra 3 o más tarjetas</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>✨ Escenario: Seleccionar una tarjeta</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el carrusel contiene tarjetas</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario hace clic en una tarjeta</div>
+                            <div class="scenario-step"><strong>Entonces</strong> esa tarjeta se resalta como seleccionada</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔍 Escenario: No hay propuestas disponibles</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que la consulta no arroja resultados</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario abre el carrusel</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve el mensaje "No se encontraron visualizaciones"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>📱 Escenario: Carga incremental de propuestas</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que hay más de 5 propuestas</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario llega al final</div>
+                            <div class="scenario-step"><strong>Entonces</strong> aparece spinner "Cargando más plantillas…"</div>
+                        </div>
+                    </div>
                 `,
 
                 alerts: `
                     <div class="content-header">
                         <h2><i class="fas fa-bell"></i> Alertas & Programación</h2>
                         <p>Sistema de notificaciones inteligente basado en KPIs</p>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
-                            <strong>User Story:</strong> Como usuario, quiero definir reglas para recibir notificaciones cuando mis KPIs crucen umbrales, para vigilar métricas críticas sin supervisión manual.
-                        </div>
                     </div>
+                    
                     <div class="content-grid">
                         <div class="feature-card">
                             <div class="feature-header">
@@ -2044,6 +2823,75 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero definir reglas para recibir notificaciones cuando mis KPIs crucen umbrales, <strong>para</strong> vigilar métricas críticas sin supervisión manual.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>No depende de otras secciones</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Operadores y canales pueden ajustarse</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Automatiza monitoreo continuo</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Wizard y panel de gestión acotados</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Creación, edición y notificación</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Criterios Gherkin definidos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>✅ Escenario: Crear regla con éxito</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario abre el wizard de alertas</div>
+                            <div class="scenario-step"><strong>Cuando</strong> selecciona KPI "Ventas" y operador ">" y valor "1000"</div>
+                            <div class="scenario-step"><strong>Y</strong> activa canal "email"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> la alerta aparece en la lista con estado "Activa"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>❌ Escenario: Crear regla con valor inválido</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario ingresa texto en el campo valor</div>
+                            <div class="scenario-step"><strong>Cuando</strong> intenta avanzar</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve mensaje "Valor debe ser numérico" inline</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔔 Escenario: Notificación en vivo</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que existe una regla activa</div>
+                            <div class="scenario-step"><strong>Y</strong> la métrica supera el umbral</div>
+                            <div class="scenario-step"><strong>Cuando</strong> ocurre el evento</div>
+                            <div class="scenario-step"><strong>Entonces</strong> aparece un toast "Ventas superaron 1000"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>⏸️ Escenario: Pausar una alerta</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que hay una alerta activa</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario pulsa "Pausar"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> la alerta cambia a estado "Pausada" en el panel</div>
+                        </div>
+                    </div>
                 `,
 
                 logs: `
@@ -2169,6 +3017,73 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero revisar un historial de mis acciones y comparar versiones, <strong>para</strong> entender cómo evolucionó mi dashboard y quién realizó cada cambio.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>Solo interfaz</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Extensión de tipos de eventos</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Transparencia de cambios</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Logs y comparador</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Timeline y diff</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Eventos y filtros</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>📋 Escenario: Ver lista de eventos</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que hay acciones registradas</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario abre la sección de logs</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve eventos ordenados cronológicamente</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔍 Escenario: Filtrar por tipo de evento</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que existen eventos de varios tipos</div>
+                            <div class="scenario-step"><strong>Cuando</strong> aplica filtro "drag"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> solo muestra eventos de tipo "drag"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔄 Escenario: Comparar dos versiones</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que hay al menos dos versiones guardadas</div>
+                            <div class="scenario-step"><strong>Cuando</strong> elige versiones A y B</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve diferencias de widgets entre ambas</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>📝 Escenario: Sin registros disponibles</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que no hay acciones previas</div>
+                            <div class="scenario-step"><strong>Cuando</strong> accede a logs</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Aún no hay actividad registrada"</div>
+                        </div>
+                    </div>
                 `,
 
                 collaboration: `
@@ -2238,6 +3153,74 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como equipo</strong>, queremos compartir dashboards y comentar directamente sobre los gráficos, <strong>para</strong> colaborar de forma transparente y centralizada.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>No requiere otras funcionalidades</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Tipos de roles y permisos</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Facilita feedback y trabajo en equipo</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Invitación, enlaces y comentarios</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Cada subitem aislable</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Flujos de invitación y comentario</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>👥 Escenario: Invitar usuario con rol editor</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario abre el modal de invitación</div>
+                            <div class="scenario-step"><strong>Cuando</strong> ingresa "juan@empresa.com" y selecciona "editor"</div>
+                            <div class="scenario-step"><strong>Y</strong> confirma</div>
+                            <div class="scenario-step"><strong>Entonces</strong> juan@empresa.com aparece en la lista con rol "editor"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>❌ Escenario: Invitar email inválido</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el modal de invitación está abierto</div>
+                            <div class="scenario-step"><strong>Cuando</strong> ingresa "no-es-email" y confirma</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Formato de email inválido" inline</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>💬 Escenario: Añadir comentario a widget</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario abre el hilo de un widget</div>
+                            <div class="scenario-step"><strong>Cuando</strong> escribe un comentario y pulsa "Enviar"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el comentario aparece en el hilo</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>✅ Escenario: Marcar comentario como resuelto</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que existe un comentario no resuelto</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario pulsa "Marcar como resuelto"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el comentario se muestra tachado y con etiqueta "Resuelto"</div>
+                        </div>
+                    </div>
                 `,
 
                 export: `
@@ -2286,6 +3269,73 @@
                                     <button class="btn" style="font-size: 0.8rem;">🧪 Probar</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero descargar datos y gráficos, y consultar los endpoints disponibles, <strong>para</strong> compartir reportes y automatizar integraciones.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>No depende de secciones previas</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Formatos soportados</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Facilita interoperabilidad</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Export y sandbox</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Menú y visor</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Descarga y peticiones</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>📊 Escenario: Exportar tabla a CSV</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que la tabla está renderizada</div>
+                            <div class="scenario-step"><strong>Cuando</strong> selecciona "CSV" en exportación</div>
+                            <div class="scenario-step"><strong>Entonces</strong> inicia descarga de "datos.csv"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>❌ Escenario: Error al exportar</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que ocurre un fallo en la generación</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario intenta exportar</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Error al generar archivo. Intenta más tarde."</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>📋 Escenario: Ver endpoint en docs</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario abre la sección de APIs</div>
+                            <div class="scenario-step"><strong>Cuando</strong> hace clic en un endpoint</div>
+                            <div class="scenario-step"><strong>Entonces</strong> muestra método, ruta y descripción</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🧪 Escenario: Probar endpoint</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el sandbox está habilitado</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario pulsa "Probar en consola"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> envía una petición de prueba y muestra la respuesta</div>
                         </div>
                     </div>
                 `,
@@ -2343,6 +3393,73 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero usar la aplicación en cualquier dispositivo y con ayudas de accesibilidad, <strong>para</strong> que nadie quede excluido.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>Aplica a toda la UI</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Niveles WCAG</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Inclusión total</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Breakpoints y ARIA</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Criterios medibles</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Checklist de pruebas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>⌨️ Escenario: Navegación por teclado</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que la página está cargada</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario presiona Tab repetidamente</div>
+                            <div class="scenario-step"><strong>Entonces</strong> puede acceder a todos los elementos interactivos</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🎨 Escenario: Contraste insuficiente</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario configura colores</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el contraste cae bajo 4.5:1</div>
+                            <div class="scenario-step"><strong>Entonces</strong> aparece alerta "Contraste no cumple WCAG AA"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>📱 Escenario: Vista en móvil</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el ancho es <600px</div>
+                            <div class="scenario-step"><strong>Cuando</strong> carga el dashboard</div>
+                            <div class="scenario-step"><strong>Entonces</strong> los paneles se apilan en una columna</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🔍 Escenario: Menú colapsable en tablet</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el dispositivo es tablet</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario pulsa icono de menú</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el sidebar se oculta y muestra overlay</div>
                         </div>
                     </div>
                 `,
@@ -2405,6 +3522,59 @@
                                     <button class="btn" style="font-size: 0.8rem;">🔗 Okta</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como usuario</strong>, quiero que mis conexiones sean seguras y flujos de autenticación corporativos funcionen sin interrupciones, <strong>para</strong> proteger mis datos.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>Solo afecta UI</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Protocolos y timeouts</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Confidencialidad</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>TLS redirect y SSO</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Cada flujo separado</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Redirecciones y errores</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>🔒 Escenario: Redirección a HTTPS</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario ingresa http://app.com</div>
+                            <div class="scenario-step"><strong>Cuando</strong> carga la página</div>
+                            <div class="scenario-step"><strong>Entonces</strong> redirige a https://app.com y muestra "Conexión segura"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>❌ Escenario: Error en SSO</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el proveedor no responde</div>
+                            <div class="scenario-step"><strong>Cuando</strong> el usuario inicia SSO</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Error de autenticación. Intenta más tarde."</div>
                         </div>
                     </div>
                 `,
@@ -2564,6 +3734,73 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="user-story-section">
+                        <h4>👤 User Story</h4>
+                        <p><strong>Como desarrollador</strong>, quiero instalar y configurar plugins desde la UI, <strong>para</strong> extender la aplicación sin modificar el core.</p>
+                    </div>
+
+                    <div class="invest-section">
+                        <h4>📋 Criterios INVEST</h4>
+                        <div class="invest-grid">
+                            <div class="invest-item">
+                                <strong>Independiente</strong>
+                                <span>Aíslado de otras secciones</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Negociable</strong>
+                                <span>Tipos y número de plugins</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Valiosa</strong>
+                                <span>Personalización ágil</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Estimable</strong>
+                                <span>Galería y configuración</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Pequeña</strong>
+                                <span>Cada subitem</span>
+                            </div>
+                            <div class="invest-item">
+                                <strong>Testable</strong>
+                                <span>Instalar, configurar y desinstalar</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="criteria-section">
+                        <h4>🧪 Criterios de Aceptación (Gherkin)</h4>
+                        
+                        <div class="scenario">
+                            <h5>⬇️ Escenario: Instalar un plugin</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el usuario está en la galería</div>
+                            <div class="scenario-step"><strong>Cuando</strong> hace clic en "Instalar"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> el plugin aparece en la lista de instalados</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>❌ Escenario: Error al instalar plugin corrupto</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que el plugin no es compatible</div>
+                            <div class="scenario-step"><strong>Cuando</strong> selecciona "Instalar"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Error: plugin incompatible"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>⚙️ Escenario: Configurar un plugin</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que un plugin está instalado</div>
+                            <div class="scenario-step"><strong>Cuando</strong> abre su modal de configuración y ajusta parámetros válidos</div>
+                            <div class="scenario-step"><strong>Entonces</strong> ve "Configuración guardada"</div>
+                        </div>
+
+                        <div class="scenario">
+                            <h5>🗑️ Escenario: Desinstalar un plugin</h5>
+                            <div class="scenario-step"><strong>Dado</strong> que un plugin está instalado</div>
+                            <div class="scenario-step"><strong>Cuando</strong> pulsa "Desinstalar"</div>
+                            <div class="scenario-step"><strong>Entonces</strong> desaparece de la lista de instalados</div>
                         </div>
                     </div>
                 `
