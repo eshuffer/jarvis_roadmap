@@ -1,0 +1,522 @@
+Producto IA – Versión 05: Funcionalidades Frontend con User Stories, INVEST y Criterios BDD
+Este documento incluye, para cada funcionalidad y sus subitems:
+1.	La descripción original de qué quiere lograr el usuario (manteniendo el texto previo exactamente).
+2.	Un User Story en formato “Como , quiero <acción>, para”.
+3.	Un breve checklist INVEST para asegurar calidad de la historia.
+4.	Criterios de aceptación en Gherkin (Given–When–Then), con al menos un escenario positivo y uno alternativo.
+________________________________________
+1. Gestión de usuarios & sesiones
+Descripción original: 1.1 Formularios de registro y acceso
+•	Pantallas para crear cuenta y entrar al sistema, con campos claros (email, contraseña), placeholders descriptivos y botones de acción (“Registrarme”, “Iniciar sesión”).
+•	Validaciones en el cliente: formato de email, longitud y complejidad de la contraseña, feedback inmediato sobre errores (mensajes inline, bordes de campo en rojo).
+1.2 Captcha y 2FA en UI
+•	Integración visual de CAPTCHA (checkbox o widget) en el formulario de registro/login.
+•	Componente para ingreso de código de verificación (2FA): campo numérico, contador regresivo en pantalla y mensajes de envío (“Código reenviado en 30 s”).
+1.3 Estados y feedback de sesión
+•	Indicadores de carga (spinners) al enviar credenciales.
+•	Mensajes toast o alertas contextuales para éxito (bienvenida) o fallo (contraseña incorrecta, usuario no existe).
+1.4 Recordarme y gestión de sesión activa
+•	Checkbox “Mantener sesión iniciada” con tooltip explicativo.
+•	Icono o avatar en la barra superior que despliega menú de usuario (perfil, cerrar sesión).
+User Story:
+Como usuario, quiero crear mi cuenta e iniciar sesión de forma segura, para poder acceder a mis análisis y retomar mi trabajo sin interrupciones.
+INVEST:
+•	Independiente: No depende de otras funcionalidades.
+•	Negociable: El alcance de 2FA o CAPTCHA puede ajustarse.
+•	Valiosa: Sin autenticación segura, la app no tiene valor.
+•	Estimable: Alcance claro para estimar esfuerzo.
+•	Pequeña: Registro, login y logout pueden implementarse por separado.
+•	Testable: Los criterios Gherkin definen qué validar.
+Criterios de Aceptación:
+Escenario: Registro exitoso
+  Dado que un visitante está en la pantalla de registro
+  Cuando ingresa email y contraseña válidos
+  Y hace clic en “Registrarme”
+  Entonces ve mensaje “Cuenta creada. Revisa tu email.”
+
+Escenario: Registro con email inválido
+  Dado que un visitante está en la pantalla de registro
+  Cuando ingresa “usuario@invalido” y confirma
+  Entonces ve “Formato de email inválido” inline
+Escenario: Login fallido
+  Dado que un usuario registrado está en el formulario de login
+  Cuando ingresa credenciales incorrectas
+  Entonces ve alerta “Email o contraseña incorrectos”
+
+Escenario: Logout exitoso
+  Dado que un usuario autenticado ve su avatar
+  Cuando selecciona “Cerrar sesión”
+  Entonces regresa a la pantalla de login
+________________________________________
+2. Espacios de trabajo / Proyectos
+Descripción original: 2.1 CRUD de proyectos
+•	Botón “Nuevo proyecto” que abre un modal con inputs (nombre, descripción); botones “Guardar”/“Cancelar” y validaciones inline.
+•	Acción de clonar y renombrar: menú contextual en cada tarjeta/listado con opciones “Clonar”, “Renombrar” y modal de edición correspondiente.
+•	Confirmación visual (snackbar) tras crear, editar o eliminar un proyecto. 2.2 Organización de reportes y datasets
+•	Vista de lista o cuadrícula de reportes con miniaturas, nombres y etiquetas.
+•	Drag & drop de reportes dentro de carpetas o secciones, con animaciones suaves y placeholder que indica zona de caída.
+•	Búsqueda y filtros en tiempo real (por nombre, fecha, etiqueta) con contadores de resultados. 2.3 Personalización de tema (UI)
+•	Panel lateral de ajustes visuales: selector de modo claro/oscuro, ajuste de tamaño de fuente y espaciado.
+•	Vista previa en vivo de los cambios antes de aplicarlos, con botón “Aplicar cambios” y opción “Restaurar valores por defecto”.
+User Story:
+Como analista, quiero crear y organizar varios espacios de trabajo, para separar clientes o líneas de análisis y mantener todo ordenado.
+INVEST:
+•	Independiente: Operación CRUD sin depender de otros módulos.
+•	Negociable: Límite de proyectos y tags.
+•	Valiosa: Organización clara por caso de uso.
+•	Estimable: CRUD y filtros bien delimitados.
+•	Pequeña: Crear, editar, eliminar como historias separadas.
+•	Testable: Criterios Gherkin aplicables.
+Criterios de Aceptación:
+Escenario: Crear proyecto
+  Dado que el analista está en la vista de proyectos
+  Cuando hace clic en “Nuevo proyecto” y completa campos válidos
+  Entonces el proyecto aparece en la lista
+
+Escenario: Crear proyecto sin nombre
+  Dado que el analista abre el modal de nuevo proyecto
+  Cuando deja el nombre vacío y confirma
+  Entonces ve “El nombre es obligatorio” inline
+Escenario: Clonar proyecto
+  Dado que existe un proyecto en la lista
+  Cuando selecciona “Clonar”
+  Entonces aparece copia con sufijo “-copia”
+
+Escenario: Renombrar a nombre duplicado
+  Dado que hay un proyecto llamado “X”
+  Cuando renombra otro a “X”
+  Entonces ve “Ya existe un proyecto con ese nombre”
+________________________________________
+3. Conexión & orquestación de datos
+Descripción original: 3.1 Alta y edición de orígenes de datos
+•	Formulario paso a paso (wizard) para configurar una nueva conexión: tipo de fuente (dropdown), host/puerto/credenciales, con validaciones de campo obligatorios.
+•	Botón “Probar conexión” en el mismo formulario, que muestra un mensaje inline de éxito o error. 3.2 Gestión de jobs programados
+•	Calendario o selector cron en la UI para definir frecuencia de ejecución, con vista de resumen legible.
+•	Lista de jobs con estado (activado/pausado), última ejecución y botón para editar o eliminar. 3.3 Monitor de estado de orquestaciones
+•	Dashboard de orquestación con tarjetas de estado: “Éxito”, “Fallido”, “En curso”, con icono y color.
+•	Tooltip al pasar el cursor mostrando resumen de registros procesados.
+User Story:
+Como usuario, quiero definir de dónde vienen mis datos y con qué frecuencia se actualizan, para asegurar dashboards siempre actualizados.
+INVEST:
+•	Independiente: Wizard y monitor desacoplados.
+•	Negociable: Alcance de frecuencias.
+•	Valiosa: Automatiza refresh.
+•	Estimable: Mostrar conexión y listado por separado.
+•	Pequeña: Configuración, scheduling y monitor.
+•	Testable: Prueba de conexión y visibilidad de jobs.
+Criterios de Aceptación:
+Escenario: Probar conexión exitosa
+  Dado que el usuario completó datos de conexión válidos
+  Cuando hace clic en “Probar conexión”
+  Entonces ve “Conexión exitosa” inline
+
+Escenario: Probar conexión fallida
+  Dado que los datos son inválidos
+  Cuando hace clic en “Probar conexión”
+  Entonces ve “Error: host no encontrado” inline
+Escenario: Crear job diario
+  Dado que la conexión está configurada
+  Cuando selecciona “Diaria” y confirma
+  Entonces el job aparece en la lista con etiqueta “Diaria”
+
+Escenario: Eliminar job
+  Dado que hay un job activo
+  Cuando hace clic en “Eliminar”
+  Entonces desaparece de la lista
+________________________________________
+4. Interfaz de chat IA
+Descripción original: 4.1 Componente de entrada de usuario
+•	Campo de texto multilinea con placeholder sugestivo.
+•	Indicador de escritura (“el agente está escribiendo…”). 4.2 Renderizado de respuestas ricas
+•	Bloques diferenciados para texto, tablas y gráficos, con acciones de copiar y descargar.
+•	Scroll infinito con botón “Ir abajo”. 4.3 Refinamiento y sugerencias
+•	Botones “¿Refinar?” y chips de preguntas relacionadas. 4.4 Manejo de errores en UI
+•	Mensajes descriptivos y banner “Reconectando…”.
+User Story:
+Como usuario, quiero conversar en lenguaje natural con mis datos, para obtener insights rápidos sin navegar menús.
+INVEST:
+•	Independiente: No requiere proyectos ni orquestación.
+•	Negociable: Tipos de respuestas.
+•	Valiosa: Simplifica análisis.
+•	Estimable: Input y render.
+•	Pequeña: Envío y distintas respuestas.
+•	Testable: Ver recursos y errores.
+Criterios de Aceptación:
+Escenario: Respuesta de texto
+  Dado que el usuario envía consulta válida
+  Cuando recibe respuesta
+  Entonces aparece bloque de texto
+
+Escenario: Respuesta de gráfico y tabla
+  Dado que la consulta retorna datos tabulares
+  Cuando se procesan
+  Entonces tabla y gráfico se muestran
+Escenario: Error de red
+  Dado que hay problema de conexión
+  Cuando envía consulta
+  Entonces ve “Error… Reintenta” banner
+
+Escenario: Refinamiento
+  Dado que la respuesta ofrece “¿Más detalle?”
+  Cuando el usuario lo selecciona
+  Entonces se envía consulta extendida
+________________________________________
+________________________________________
+5. Manejo de reportes & dashboards
+Descripción original: 5.1 Lienzo de diseño drag-and-drop
+•	Panel lateral con lista de widgets (gráficos, tablas, textos), que el usuario arrastra al lienzo principal; mientras tanto, un placeholder muestra las zonas disponibles, guiando la colocación.
+5.2 Guardado y control de versiones
+•	Botón “Guardar dashboard” abre un modal donde el usuario nombra la versión y añade una descripción; tras guardar, un snackbar confirma el resultado y muestra el número de versión.
+•	Dropdown de versiones que permite seleccionar y visualizar dashboards anteriores.
+5.3 Etiquetado y filtrado
+•	Al guardar, el usuario asigna etiquetas flexibles (autocompletadas con las existentes o creadas al vuelo), facilitando la búsqueda posterior.
+•	En la vista de proyectos, filtros por etiqueta muestran sólo los dashboards etiquetados con los criterios seleccionados.
+User Story:
+Como analista, quiero arrastrar widgets para armar dashboards y guardar múltiples versiones, para comparar diferentes diseños y revertir cambios.
+INVEST:
+•	Independiente: No requiere conexión de datos.
+•	Negociable: Número de versiones retencionable.
+•	Valiosa: Permite A/B testing de visualizaciones.
+•	Estimable: Drag-and-drop y guardado de versión separados.
+•	Pequeña: Historia de diseño y de guardado.
+•	Testable: Drag, guardado y revert comprobables.
+Criterios de Aceptación:
+Escenario: Arrastrar y soltar un widget
+  Dado que el usuario ve la paleta de widgets
+  Cuando arrastra un widget al lienzo
+  Entonces el widget aparece en la posición deseada
+
+Escenario: Guardar una versión
+  Dado que el dashboard tiene widgets en el lienzo
+  Cuando hace clic en “Guardar dashboard” y confirma nombre
+  Entonces ve snackbar “Dashboard guardado” con versión 1
+Escenario: Revertir a versión anterior
+  Dado que existen al menos dos versiones guardadas
+  Cuando el usuario selecciona versión 1 en el dropdown
+  Entonces el lienzo se actualiza a la configuración de la versión 1
+
+Escenario: Etiquetar un dashboard
+  Dado que el modal de guardado está abierto
+  Cuando el usuario añade etiqueta “Ventas” y confirma
+  Entonces el dashboard muestra la etiqueta “Ventas”
+________________________________________
+6. Visualización dinámica de datos
+Descripción original: 6.1 Selección de tipo de gráfico
+•	Menú desplegable con opciones (barras, líneas, pastel, scatter, mapa de calor), que incluye un mini-preview al pasar el cursor.
+6.2 Configuración de propiedades
+•	Panel lateral para ajustar ejes, leyenda, títulos y etiquetas, con live-preview del gráfico en tiempo real.
+6.3 Interacción sobre la gráfica
+•	Zoom y paneo con arrastre del ratón o gesto táctil; botones “Reset view” para volver a la vista inicial.
+•	Tooltips al pasar por puntos de datos, con información detallada y opción “Copiar valor”.
+User Story:
+Como analista, quiero seleccionar distintos tipos de gráficos y ajustar sus propiedades, para comunicar mis insights de forma óptima.
+INVEST:
+•	Independiente: Funciona sin chat ni proyectos.
+•	Negociable: Conjunto de tipos de gráficos.
+•	Valiosa: Mejora la comunicación de datos.
+•	Estimable: Selección y configuración por separado.
+•	Pequeña: Tipo de gráfico y configuración.
+•	Testable: Opciones verificables.
+Criterios de Aceptación:
+Escenario: Seleccionar gráfico de líneas
+  Dado que el panel de tipos de gráfico esté visible
+  Cuando el usuario elige “Líneas”
+  Entonces el gráfico cambia a tipo líneas con datos cargados
+
+Escenario: Ajustar leyenda y título
+  Dado que el gráfico esté renderizado
+  Cuando el usuario modifica el campo “Título” en el panel lateral
+  Entonces el título del gráfico se actualiza en vivo
+Escenario: Zoom interactivo
+  Dado que el gráfico muestra ejes con valores
+  Cuando el usuario arrastra para hacer zoom
+  Entonces la vista se acota al rango seleccionado
+
+Escenario: Restablecer vista
+  Dado que el usuario ha hecho zoom
+  Cuando presiona “Reset view”
+  Entonces el gráfico vuelve a la vista completa original
+________________________________________
+7. Tarjetas de contenido en carrusel
+Descripción original: 7.1 Galería de templates
+•	Carrusel horizontal con tarjetas que muestran distintas versiones de gráficos o tablas generadas automáticamente en respuesta a la consulta; cada tarjeta lleva título descriptivo y miniatura representativa.
+7.2 Estados de carga y ausencia de propuestas
+•	Mientras llegan las propuestas, se muestran skeleton cards que simulan el contenido; si no hay propuestas, un mensaje ilustrado (“No se encontraron visualizaciones”) invita al usuario a reformular la pregunta.
+7.3 Navegación y carga incremental
+•	Flechas laterales y paginadores que indican la posición en el carrusel, con soporte de swipe táctil y arrastre con ratón.
+•	Si hay más propuestas de las mostradas, al llegar al final aparece un spinner “Cargando más plantillas…”.
+User Story:
+Como usuario, quiero recibir varias propuestas de visualización basadas en mi pregunta al chat, presentadas en tarjetas dentro de un carrusel, para elegir la opción más adecuada y luego personalizarla a mi gusto.
+INVEST:
+•	Independiente: No interactúa con otros bloques.
+•	Negociable: Número de templates inicial.
+•	Valiosa: Acelera la exploración de alternativas.
+•	Estimable: Galería y navegación bien delimitados.
+•	Pequeña: Carga de propuestas.
+•	Testable: Número de cards y mensajes.
+Criterios de Aceptación:
+Escenario: Mostrar al menos 3 propuestas
+  Dado que el usuario envía una consulta al chat
+  Cuando las propuestas llegan
+  Entonces el carrusel muestra 3 o más tarjetas
+
+Escenario: Seleccionar una tarjeta
+  Dado que el carrusel contiene tarjetas
+  Cuando el usuario hace clic en una tarjeta
+  Entonces esa tarjeta se resalta como seleccionada
+Escenario: No hay propuestas disponibles
+  Dado que la consulta no arroja resultados
+  Cuando el usuario abre el carrusel
+  Entonces ve el mensaje “No se encontraron visualizaciones”
+
+Escenario: Carga incremental de propuestas
+  Dado que hay más de 5 propuestas
+  Cuando el usuario llega al final
+  Entonces aparece spinner “Cargando más plantillas…”
+________________________________________
+8. Logs & auditoría (UI)
+Descripción original: 8.1 Timeline de acciones
+•	Vista en formato cronológico donde cada evento (añadir widget, mover elemento, guardar versión) aparece con fecha, hora y breve descripción.
+8.2 Comparación visual de versiones
+•	Selector de dos versiones para ver los títulos de los widgets que se añadieron, eliminaron o modificaron.
+8.3 Búsqueda y filtrado
+•	Barra de búsqueda que sugiere términos frecuentes y filtros por tipo de evento.
+User Story:
+Como usuario, quiero revisar un historial de mis acciones y comparar versiones, para entender cómo evolucionó mi dashboard y quién realizó cada cambio.
+INVEST:
+•	Independiente: Solo interfaz.
+•	Negociable: Extensión de tipos de eventos.
+•	Valiosa: Transparencia de cambios.
+•	Estimable: Logs y comparador.
+•	Pequeña: Timeline y diff.
+•	Testable: Eventos y filtros.
+Criterios de Aceptación:
+Escenario: Ver lista de eventos
+  Dado que hay acciones registradas
+  Cuando el usuario abre la sección de logs
+  Entonces ve eventos ordenados cronológicamente
+
+Escenario: Filtrar por tipo de evento
+  Dado que existen eventos de varios tipos
+  Cuando aplica filtro “drag”
+  Entonces solo muestra eventos de tipo “drag”
+Escenario: Comparar dos versiones
+  Dado que hay al menos dos versiones guardadas
+  Cuando elige versiones A y B
+  Entonces ve diferencias de widgets entre ambas
+
+Escenario: Sin registros disponibles
+  Dado que no hay acciones previas
+  Cuando accede a logs
+  Entonces ve “Aún no hay actividad registrada”
+________________________________________
+9. Alertas & programación
+Descripción original: 9.1 Creación de reglas paso a paso
+•	Asistente en varias pantallas donde el usuario selecciona el KPI, el operador (>, <, =), el valor umbral y revisa un resumen antes de confirmar.
+9.2 Selección de canales de notificación
+•	Opciones (email, SMS, Slack, push) presentadas con iconos y descripciones, que el usuario activa mediante toggles.
+9.3 Panel de gestión de alertas
+•	Tabla o tarjetas listando todas las reglas creadas, con estado (activa/pausada), última vez disparada y acciones rápidas (“Editar”, “Pausar”, “Eliminar”).
+9.4 Notificaciones en vivo
+•	Toasts emergentes en la esquina de la pantalla o badge en el icono de alertas, que al hacer clic despliegan los detalles de la alerta y ofrecen un enlace directo al KPI correspondiente.
+User Story:
+Como usuario, quiero definir reglas para recibir notificaciones cuando mis KPIs crucen umbrales, para vigilar métricas críticas sin supervisión manual.
+INVEST:
+•	Independiente: No depende de otras secciones.
+•	Negociable: Operadores y canales pueden ajustarse.
+•	Valiosa: Automatiza monitoreo continuo.
+•	Estimable: Wizard y panel de gestión acotados.
+•	Pequeña: Creación, edición y notificación.
+•	Testable: Criterios Gherkin definidos.
+Criterios de Aceptación:
+Escenario: Crear regla con éxito
+  Dado que el usuario abre el wizard de alertas
+  Cuando selecciona KPI “Ventas” y operador “>” y valor “1000”
+  Y activa canal “email”
+  Entonces la alerta aparece en la lista con estado “Activa”
+
+Escenario: Crear regla con valor inválido
+  Dado que el usuario ingresa texto en el campo valor
+  Cuando intenta avanzar
+  Entonces ve mensaje “Valor debe ser numérico” inline
+Escenario: Notificación en vivo
+  Dado que existe una regla activa
+  Y la métrica supera el umbral
+  Cuando ocurre el evento
+  Entonces aparece un toast “Ventas superaron 1000”
+
+Escenario: Pausar una alerta
+  Dado que hay una alerta activa
+  Cuando el usuario pulsa “Pausar”
+  Entonces la alerta cambia a estado “Pausada” en el panel
+________________________________________
+10. Colaboración & compartición
+Descripción original: 10.1 Invitación y permisos
+•	Modal para añadir usuarios por email y asignarles roles (lector, editor, administrador) mediante un dropdown con descripciones.
+10.2 Enlaces seguros de compartición
+•	Botón “Copiar enlace” que genera un URL con opciones de expiración y contraseña opcional, y muestra un toast de confirmación.
+10.3 Comentarios y anotaciones
+•	Hilo de conversación asociado a cada widget: el usuario puede escribir comentarios, adjuntar imágenes y marcar como resuelto.
+User Story:
+Como equipo, queremos compartir dashboards y comentar directamente sobre los gráficos, para colaborar de forma transparente y centralizada.
+INVEST:
+•	Independiente: No requiere otras funcionalidades.
+•	Negociable: Tipos de roles y permisos.
+•	Valiosa: Facilita feedback y trabajo en equipo.
+•	Estimable: Invitación, enlaces y comentarios.
+•	Pequeña: Cada subitem aislable.
+•	Testable: Flujos de invitación y comentario.
+Criterios de Aceptación:
+Escenario: Invitar usuario con rol editor
+  Dado que el usuario abre el modal de invitación
+  Cuando ingresa “juan@empresa.com” y selecciona “editor”
+  Y confirma
+  Entonces juan@empresa.com aparece en la lista con rol “editor”
+
+Escenario: Invitar email inválido
+  Dado que el modal de invitación está abierto
+  Cuando ingresa “no-es-email” y confirma
+  Entonces ve “Formato de email inválido” inline
+Escenario: Añadir comentario a widget
+  Dado que el usuario abre el hilo de un widget
+  Cuando escribe un comentario y pulsa “Enviar”
+  Entonces el comentario aparece en el hilo
+
+Escenario: Marcar comentario como resuelto
+  Dado que existe un comentario no resuelto
+  Cuando el usuario pulsa “Marcar como resuelto”
+  Entonces el comentario se muestra tachado y con etiqueta “Resuelto”
+________________________________________
+11. Exportación & documentación de APIs
+Descripción original: 11.1 Menú de exportación
+•	Dropdown con opciones “CSV”, “Excel”, “JSON” para tablas y “PNG”, “JPEG”, “PDF” para gráficos, mostrando iconos y descripciones.
+•	Indicador de progreso dentro del mismo dropdown (“Generando… 60%”).
+11.2 Visor de documentación de APIs
+•	Sección que muestra endpoints en una tabla (método, ruta, descripción) con botones “Copiar URL” y “Probar en consola”.
+User Story:
+Como usuario, quiero descargar datos y gráficos, y consultar los endpoints disponibles, para compartir reportes y automatizar integraciones.
+INVEST:
+•	Independiente: No depende de secciones previas.
+•	Negociable: Formatos soportados.
+•	Valiosa: Facilita interoperabilidad.
+•	Estimable: Export y sandbox.
+•	Pequeña: Menú y visor.
+•	Testable: Descarga y peticiones.
+Criterios de Aceptación:
+Escenario: Exportar tabla a CSV
+  Dado que la tabla está renderizada
+  Cuando selecciona “CSV” en exportación
+  Entonces inicia descarga de “datos.csv”
+
+Escenario: Error al exportar
+  Dado que ocurre un fallo en la generación
+  Cuando el usuario intenta exportar
+  Entonces ve “Error al generar archivo. Intenta más tarde.”
+Escenario: Ver endpoint en docs
+  Dado que el usuario abre la sección de APIs
+  Cuando hace clic en un endpoint
+  Entonces muestra método, ruta y descripción
+
+Escenario: Probar endpoint
+  Dado que el sandbox está habilitado
+  Cuando el usuario pulsa “Probar en consola”
+  Entonces envía una petición de prueba y muestra la respuesta
+________________________________________
+12. Accesibilidad & responsividad
+Descripción original: 12.1 Navegación por teclado y roles ARIA
+•	Componentes navegables con Tab/Enter, indicadores de foco y atributos ARIA.
+12.2 Diseño adaptable
+•	Layout fluido que reorganiza paneles en una columna en móvil, con menú colapsable.
+12.3 Chequeo de contraste y legibilidad
+•	Alerta en configuración si la combinación de colores no cumple estándares de contraste.
+User Story:
+Como usuario, quiero usar la aplicación en cualquier dispositivo y con ayudas de accesibilidad, para que nadie quede excluido.
+INVEST:
+•	Independiente: Aplica a toda la UI.
+•	Negociable: Niveles WCAG.
+•	Valiosa: Inclusión total.
+•	Estimable: Breakpoints y ARIA.
+•	Pequeña: Criterios medibles.
+•	Testable: Checklist de pruebas.
+Criterios de Aceptación:
+Escenario: Navegación por teclado
+  Dado que la página está cargada
+  Cuando el usuario presiona Tab repetidamente
+  Entonces puede acceder a todos los elementos interactivos
+
+Escenario: Contraste insuficiente
+  Dado que el usuario configura colores
+  Cuando el contraste cae bajo 4.5:1
+  Entonces aparece alerta “Contraste no cumple WCAG AA”
+Escenario: Vista en móvil
+  Dado que el ancho es <600px
+  Cuando carga el dashboard
+  Entonces los paneles se apilan en una columna
+
+Escenario: Menú colapsable en tablet
+  Dado que el dispositivo es tablet
+  Cuando el usuario pulsa icono de menú
+  Entonces el sidebar se oculta y muestra overlay
+________________________________________
+13. Seguridad & cumplimiento en cliente
+Descripción original: 13.1 Detección y redirección a HTTPS
+•	Redirecciona HTTP a HTTPS con mensaje al usuario.
+13.2 Manejo seguro de tokens
+•	Almacenamiento de JWT o cookies con flags de seguridad, sin exponerlos en localStorage.
+13.3 Flujos de SSO y OAuth
+•	Pantalla de redirección a proveedor de identidad con spinner y mensajes claros, y resumen del resultado al volver.
+User Story:
+Como usuario, quiero que mis conexiones sean seguras y flujos de autenticación corporativos funcionen sin interrupciones, para proteger mis datos.
+INVEST:
+•	Independiente: Solo afecta UI.
+•	Negociable: Protocolos y timeouts.
+•	Valiosa: Confidencialidad.
+•	Estimable: TLS redirect y SSO.
+•	Pequeña: Cada flujo separado.
+•	Testable: Redirecciones y errores.
+Criterios de Aceptación:
+Escenario: Redirección a HTTPS
+  Dado que el usuario ingresa http://app.com
+  Cuando carga la página
+  Entonces redirige a https://app.com y muestra “Conexión segura”
+
+Escenario: Error en SSO
+  Dado que el proveedor no responde
+  Cuando el usuario inicia SSO
+  Entonces ve “Error de autenticación. Intenta más tarde.”
+________________________________________
+14. Extensibilidad & plugins
+Descripción original: 14.1 Galería de plugins instalables
+•	Lista de plugins disponibles con nombre, descripción y botones “Instalar”, “Actualizar” o “Desinstalar”.
+14.2 Configuración de cada plugin
+•	Al hacer clic en “Configurar”, abre drawer o modal con ajustes específicos (inputs, toggles).
+14.3 Registro dinámico de componentes
+•	Al instalar un plugin, su componente aparece en el panel lateral de widgets; si falla, muestra mensaje de error.
+User Story:
+Como desarrollador, quiero instalar y configurar plugins desde la UI, para extender la aplicación sin modificar el core.
+INVEST:
+•	Independiente: Aíslado de otras secciones.
+•	Negociable: Tipos y número de plugins.
+•	Valiosa: Personalización ágil.
+•	Estimable: Galería y configuración.
+•	Pequeña: Cada subitem.
+•	Testable: Instalar, configurar y desinstalar.
+Criterios de Aceptación:
+Escenario: Instalar un plugin
+  Dado que el usuario está en la galería
+  Cuando hace clic en “Instalar”
+  Entonces el plugin aparece en la lista de instalados
+
+Escenario: Error al instalar plugin corrupto
+  Dado que el plugin no es compatible
+  Cuando selecciona “Instalar”
+  Entonces ve “Error: plugin incompatible”
+Escenario: Configurar un plugin
+  Dado que un plugin está instalado
+  Cuando abre su modal de configuración y ajusta parámetros válidos
+  Entonces ve “Configuración guardada”
+
+Escenario: Desinstalar un plugin
+  Dado que un plugin está instalado
+  Cuando pulsa “Desinstalar”
+  Entonces desaparece de la lista de instalados

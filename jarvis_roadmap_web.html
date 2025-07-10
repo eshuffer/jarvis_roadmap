@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarvis Frontend Roadmap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .menu-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-left: 4px solid #4facfe;
+        }
+
+        .menu-item i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .menu-item-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .menu-item-content p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+        }
+
+        .content-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .feature-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .mockup {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 2px dashed #e9ecef;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .mockup-interactive {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .input-demo {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .input-demo:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .chart-demo {
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .welcome-screen {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .welcome-screen h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-screen p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-robot"></i> Jarvis</h1>
+                <p>Frontend Development Roadmap</p>
+            </div>
+
+            <div class="menu-item active" data-section="welcome">
+                <i class="fas fa-home"></i>
+                <div class="menu-item-content">
+                    <h3>Inicio</h3>
+                    <p>Visión general del proyecto</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="auth">
+                <i class="fas fa-user-shield"></i>
+                <div class="menu-item-content">
+                    <h3>Autenticación</h3>
+                    <p>Gestión de usuarios y sesiones</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="workspace">
+                <i class="fas fa-folder-open"></i>
+                <div class="menu-item-content">
+                    <h3>Espacios de Trabajo</h3>
+                    <p>Proyectos y organización</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="data">
+                <i class="fas fa-database"></i>
+                <div class="menu-item-content">
+                    <h3>Conexión de Datos</h3>
+                    <p>Orquestación y fuentes</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="chat">
+                <i class="fas fa-comments"></i>
+                <div class="menu-item-content">
+                    <h3>Chat IA</h3>
+                    <p>Interfaz conversacional</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="dashboard">
+                <i class="fas fa-chart-line"></i>
+                <div class="menu-item-content">
+                    <h3>Dashboards</h3>
+                    <p>Reportes y visualización</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="visualization">
+                <i class="fas fa-chart-bar"></i>
+                <div class="menu-item-content">
+                    <h3>Visualización</h3>
+                    <p>Gráficos dinámicos</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="carousel">
+                <i class="fas fa-images"></i>
+                <div class="menu-item-content">
+                    <h3>Carrusel</h3>
+                    <p>Tarjetas de contenido</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="logs">
+                <i class="fas fa-history"></i>
+                <div class="menu-item-content">
+                    <h3>Logs & Auditoría</h3>
+                    <p>Historial de cambios</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="alerts">
+                <i class="fas fa-bell"></i>
+                <div class="menu-item-content">
+                    <h3>Alertas</h3>
+                    <p>Notificaciones y programación</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="collaboration">
+                <i class="fas fa-users"></i>
+                <div class="menu-item-content">
+                    <h3>Colaboración</h3>
+                    <p>Compartir y trabajar en equipo</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="export">
+                <i class="fas fa-download"></i>
+                <div class="menu-item-content">
+                    <h3>Exportación</h3>
+                    <p>APIs y documentación</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="accessibility">
+                <i class="fas fa-universal-access"></i>
+                <div class="menu-item-content">
+                    <h3>Accesibilidad</h3>
+                    <p>Diseño inclusivo</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="security">
+                <i class="fas fa-lock"></i>
+                <div class="menu-item-content">
+                    <h3>Seguridad</h3>
+                    <p>Cumplimiento y protección</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-section="plugins">
+                <i class="fas fa-puzzle-piece"></i>
+                <div class="menu-item-content">
+                    <h3>Plugins</h3>
+                    <p>Extensibilidad</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="content-area">
+                <div class="welcome-screen">
+                    <h2>🚀 Bienvenido a Jarvis</h2>
+                    <p>Explora el roadmap completo de desarrollo frontend. Selecciona cualquier sección del menú lateral para ver detalles, explicaciones y mockups interactivos de cada funcionalidad.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add event listeners when the page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    const section = this.getAttribute('data-section');
+                    showContent(section);
+
+                    // Remove active class from all menu items
+                    menuItems.forEach(menuItem => {
+                        menuItem.classList.remove('active');
+                    });
+
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                });
+            });
+        });
+
+        function showContent(section) {
+            const contentArea = document.getElementById('content-area');
+
+            const contents = {
+                welcome: `
+                    <div class="welcome-screen">
+                        <h2>🚀 Proyecto Jarvis</h2>
+                        <p>Una plataforma de análisis de datos con IA que permite a los usuarios crear dashboards inteligentes, conectar múltiples fuentes de datos y obtener insights através de conversaciones naturales.</p>
+                        <br>
+                        <p><strong>Duración estimada:</strong> 8-10 meses de desarrollo</p>
+                        <p><strong>Tecnologías:</strong> React, TypeScript, D3.js, Material-UI</p>
+                        <br>
+                        <p><strong>User Story:</strong> Como usuario, quiero crear mi cuenta e iniciar sesión de forma segura, para poder acceder a mis análisis y retomar mi trabajo sin interrupciones.</p>
+                    </div>
+                `,
+
+                auth: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-user-shield"></i> Gestión de Usuarios & Sesiones</h2>
+                        <p>Sistema completo de autenticación con seguridad avanzada</p>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </div>
+                                <h3>Formularios de Registro y Acceso</h3>
+                            </div>
+                            <div class="feature-description">
+                                Pantallas para crear cuenta y entrar al sistema, con campos claros (email, contraseña), placeholders descriptivos y botones de acción ("Registrarme", "Iniciar sesión"). Validaciones en el cliente: formato de email, longitud y complejidad de la contraseña, feedback inmediato sobre errores.
+                            </div>
+                            <div class="mockup mockup-interactive">
+                                <h4>📧 Iniciar Sesión</h4>
+                                <input type="email" class="input-demo" placeholder="correo@ejemplo.com" style="margin: 10px 0;">
+                                <input type="password" class="input-demo" placeholder="••••••••" style="margin: 10px 0;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                                    <input type="checkbox" id="remember">
+                                    <label for="remember" style="font-size: 0.9rem;">Mantener sesión iniciada</label>
+                                </div>
+                                <button class="btn">Entrar</button>
+                                <button class="btn">Registrarme</button>
+                                <div style="margin-top: 10px; padding: 10px; background: #f8d7da; border-radius: 5px; color: #721c24; font-size: 0.8rem;">
+                                    ⚠️ Formato de email inválido
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h3>CAPTCHA y 2FA</h3>
+                            </div>
+                            <div class="feature-description">
+                                Integración visual de CAPTCHA (checkbox o widget) en el formulario de registro/login. Componente para ingreso de código de verificación (2FA): campo numérico, contador regresivo en pantalla.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                    <input type="checkbox" id="captcha">
+                                    <label for="captcha">No soy un robot</label>
+                                    <i class="fas fa-shield-alt" style="color: #28a745;"></i>
+                                </div>
+                                <p>🔐 Código de verificación enviado</p>
+                                <input type="text" class="input-demo" placeholder="123456" maxlength="6" style="text-align: center; font-size: 1.5rem;">
+                                <p style="color: #666; font-size: 0.9rem;">Código reenviado en 30s</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h3>Estados y Feedback de Sesión</h3>
+                            </div>
+                            <div class="feature-description">
+                                Indicadores de carga (spinners) al enviar credenciales. Mensajes toast o alertas contextuales para éxito (bienvenida) o fallo (contraseña incorrecta, usuario no existe).
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #667eea; display: flex; align-items: center; justify-content: center; color: white;">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span>Juan Pérez</span>
+                                    <button class="btn" style="font-size: 0.8rem;">Cerrar Sesión</button>
+                                </div>
+                                <div style="margin-top: 10px; padding: 10px; background: #d4edda; border-radius: 5px; color: #155724; font-size: 0.8rem;">
+                                    ✅ Bienvenido, Juan. Sesión iniciada correctamente.
+                                </div>
+                                <div style="margin-top: 10px; text-align: center;">
+                                    <i class="fas fa-spinner fa-spin" style="color: #667eea;"></i>
+                                    <span style="margin-left: 10px;">Verificando credenciales...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                workspace: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-folder-open"></i> Espacios de Trabajo / Proyectos</h2>
+                        <p>Organización y gestión de proyectos de análisis</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como analista, quiero crear y organizar varios espacios de trabajo, para separar clientes o líneas de análisis y mantener todo ordenado.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <h3>CRUD de Proyectos</h3>
+                            </div>
+                            <div class="feature-description">
+                                Botón "Nuevo proyecto" que abre un modal con inputs (nombre, descripción); botones "Guardar"/"Cancelar" y validaciones inline. Acción de clonar y renombrar: menú contextual en cada tarjeta/listado con opciones "Clonar", "Renombrar" y modal de edición correspondiente.
+                            </div>
+                            <div class="mockup">
+                                <button class="btn"><i class="fas fa-plus"></i> Nuevo Proyecto</button>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 15px;">
+                                    <div style="border: 2px solid #e9ecef; border-radius: 10px; padding: 15px; text-align: left; position: relative;">
+                                        <div style="position: absolute; top: 10px; right: 10px;">
+                                            <i class="fas fa-ellipsis-v" style="cursor: pointer; color: #666;"></i>
+                                        </div>
+                                        <h4>📊 Ventas Q1</h4>
+                                        <p style="font-size: 0.8rem; color: #666;">Análisis trimestral</p>
+                                        <button class="btn" style="font-size: 0.7rem; padding: 0.5rem;">Abrir</button>
+                                    </div>
+                                    <div style="border: 2px solid #e9ecef; border-radius: 10px; padding: 15px; text-align: left; position: relative;">
+                                        <div style="position: absolute; top: 10px; right: 10px;">
+                                            <i class="fas fa-ellipsis-v" style="cursor: pointer; color: #666;"></i>
+                                        </div>
+                                        <h4>📈 Marketing ROI</h4>
+                                        <p style="font-size: 0.8rem; color: #666;">Retorno inversión</p>
+                                        <button class="btn" style="font-size: 0.7rem; padding: 0.5rem;">Abrir</button>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 10px; border: 1px solid #dee2e6;">
+                                    <h5>Modal: Nuevo Proyecto</h5>
+                                    <input type="text" class="input-demo" placeholder="Nombre del proyecto" style="margin: 5px 0;">
+                                    <textarea class="input-demo" placeholder="Descripción (opcional)" style="margin: 5px 0; resize: vertical;"></textarea>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="btn" style="background: #28a745;">Guardar</button>
+                                        <button class="btn" style="background: #6c757d;">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h3>Organización de Reportes y Datasets</h3>
+                            </div>
+                            <div class="feature-description">
+                                Vista de lista o cuadrícula de reportes con miniaturas, nombres y etiquetas. Drag & drop de reportes dentro de carpetas o secciones, con animaciones suaves y placeholder que indica zona de caída. Búsqueda y filtros en tiempo real (por nombre, fecha, etiqueta) con contadores de resultados.
+                            </div>
+                            <div class="mockup">
+                                <input type="text" class="input-demo" placeholder="🔍 Buscar proyectos...">
+                                <div style="display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap;">
+                                    <span style="background: #667eea; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">Ventas</span>
+                                    <span style="background: #f5576c; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">Q1</span>
+                                    <span style="background: #4facfe; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">Activo</span>
+                                </div>
+                                <div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 5px; border: 1px dashed #ffeaa7;">
+                                    <p style="font-size: 0.8rem; color: #856404;">📁 Arrastra reportes aquí para organizar</p>
+                                </div>
+                                <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 0.8rem; color: #666;">Mostrando 3 de 12 resultados</span>
+                                    <div style="display: flex; gap: 5px;">
+                                        <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Lista</button>
+                                        <button style="padding: 5px 10px; border: 1px solid #ddd; background: #667eea; color: white; border-radius: 3px; font-size: 0.7rem;">Cuadrícula</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <h3>Personalización de Tema (UI)</h3>
+                            </div>
+                            <div class="feature-description">
+                                Panel lateral de ajustes visuales: selector de modo claro/oscuro, ajuste de tamaño de fuente y espaciado. Vista previa en vivo de los cambios antes de aplicarlos, con botón "Aplicar cambios" y opción "Restaurar valores por defecto".
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;">
+                                    <span>Modo oscuro</span>
+                                    <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                    </label>
+                                </div>
+                                <div style="margin: 10px 0;">
+                                    <label style="display: block; margin-bottom: 5px;">Tamaño de fuente</label>
+                                    <input type="range" min="12" max="20" value="16" style="width: 100%;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666;">
+                                        <span>12px</span>
+                                        <span>16px</span>
+                                        <span>20px</span>
+                                    </div>
+                                </div>
+                                <div style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 5px; border: 1px solid #dee2e6;">
+                                    <p style="font-size: 0.8rem; color: #666;">🔍 Vista previa en vivo</p>
+                                    <div style="margin-top: 5px; padding: 5px; background: white; border-radius: 3px; font-size: 14px;">
+                                        Ejemplo de texto con configuración actual
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="btn">Aplicar Cambios</button>
+                                    <button class="btn" style="background: #6c757d;">Restaurar Valores por Defecto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                data: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-database"></i> Conexión & Orquestación de Datos</h2>
+                        <p>Gestión completa de fuentes de datos y automatización</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como usuario, quiero definir de dónde vienen mis datos y con qué frecuencia se actualizan, para asegurar dashboards siempre actualizados.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-plug"></i>
+                                </div>
+                                <h3>Alta y Edición de Orígenes de Datos</h3>
+                            </div>
+                            <div class="feature-description">
+                                Formulario paso a paso (wizard) para configurar una nueva conexión: tipo de fuente (dropdown), host/puerto/credenciales, con validaciones de campo obligatorios. Botón "Probar conexión" en el mismo formulario, que muestra un mensaje inline de éxito o error.
+                            </div>
+                            <div class="mockup">
+                                <h4>🔧 Wizard: Nueva Conexión</h4>
+                                <div style="margin-bottom: 15px;">
+                                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                        <div style="width: 30px; height: 30px; background: #667eea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">1</div>
+                                        <div style="width: 30px; height: 30px; background: #e9ecef; color: #6c757d; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">2</div>
+                                        <div style="width: 30px; height: 30px; background: #e9ecef; color: #6c757d; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">3</div>
+                                    </div>
+                                    <p style="font-size: 0.8rem; color: #666;">Paso 1: Tipo de fuente</p>
+                                </div>
+                                <select class="input-demo" style="margin-bottom: 10px;">
+                                    <option>MySQL</option>
+                                    <option>PostgreSQL</option>
+                                    <option>API REST</option>
+                                    <option>CSV/Excel</option>
+                                </select>
+                                <input type="text" class="input-demo" placeholder="Host: localhost" style="margin-bottom: 10px;">
+                                <input type="text" class="input-demo" placeholder="Puerto: 3306" style="margin-bottom: 10px;">
+                                <input type="text" class="input-demo" placeholder="Usuario" style="margin-bottom: 10px;">
+                                <input type="password" class="input-demo" placeholder="Contraseña" style="margin-bottom: 10px;">
+                                <button class="btn" style="background: #17a2b8;">🔍 Probar Conexión</button>
+                                <div style="margin-top: 10px; padding: 10px; background: #d4edda; border-radius: 5px; color: #155724; font-size: 0.8rem;">
+                                    ✅ Conexión exitosa
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h3>Gestión de Jobs Programados</h3>
+                            </div>
+                            <div class="feature-description">
+                                Calendario o selector cron en la UI para definir frecuencia de ejecución, con vista de resumen legible. Lista de jobs con estado (activado/pausado), última ejecución y botón para editar o eliminar.
+                            </div>
+                            <div class="mockup">
+                                <div style="margin-bottom: 15px;">
+                                    <h5>📅 Programar Job</h5>
+                                    <div style="display: flex; gap: 10px; margin: 10px 0;">
+                                        <button style="padding: 5px 10px; border: 1px solid #ddd; background: #667eea; color: white; border-radius: 3px; font-size: 0.7rem;">Diaria</button>
+                                        <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Semanal</button>
+                                        <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Mensual</button>
+                                        <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Personalizada</button>
+                                    </div>
+                                    <input type="text" class="input-demo" placeholder="0 */6 * * *" style="margin: 5px 0;">
+                                    <p style="font-size: 0.8rem; color: #666;">Resumen: Cada 6 horas</p>
+                                </div>
+                                <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f9fa;">
+                                        <div>
+                                            <strong>📊 Ventas DB</strong>
+                                            <p style="font-size: 0.8rem; color: #666;">Cada 6 horas • Última: 14:30</p>
+                                        </div>
+                                        <div style="display: flex; gap: 5px; align-items: center;">
+                                            <span style="background: #28a745; color: white; padding: 0.25rem 0.5rem; border-radius: 10px; font-size: 0.7rem;">Activo</span>
+                                            <button style="padding: 3px 6px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Editar</button>
+                                            <button style="padding: 3px 6px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Eliminar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn" style="margin-top: 10px;">➕ Nuevo Job</button>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <h3>Monitor de Estado de Orquestaciones</h3>
+                            </div>
+                            <div class="feature-description">
+                                Dashboard de orquestación con tarjetas de estado: "Éxito", "Fallido", "En curso", con icono y color. Tooltip al pasar el cursor mostrando resumen de registros procesados.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px;">
+                                    <div style="text-align: center; padding: 15px; background: #d4edda; border-radius: 8px; cursor: pointer;" title="12 procesos exitosos | 2,456 registros procesados">
+                                        <div style="font-size: 2rem; margin-bottom: 5px;">✅</div>
+                                        <div style="font-weight: bold; font-size: 1.2rem;">12</div>
+                                        <div style="font-size: 0.8rem;">Éxito</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 15px; background: #fff3cd; border-radius: 8px; cursor: pointer;" title="3 procesos en curso | Estimado: 5 min">
+                                        <div style="font-size: 2rem; margin-bottom: 5px;">⏳</div>
+                                        <div style="font-weight: bold; font-size: 1.2rem;">3</div>
+                                        <div style="font-size: 0.8rem;">En curso</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 15px; background: #f8d7da; border-radius: 8px; cursor: pointer;" title="1 proceso fallido | Error: timeout">
+                                        <div style="font-size: 2rem; margin-bottom: 5px;">❌</div>
+                                        <div style="font-weight: bold; font-size: 1.2rem;">1</div>
+                                        <div style="font-size: 0.8rem;">Fallido</div>
+                                    </div>
+                                </div>
+                                <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; border: 1px solid #dee2e6;">
+                                    <h6 style="margin-bottom: 10px;">Actividad Reciente</h6>
+                                    <div style="font-size: 0.8rem; color: #666;">
+                                        <div style="margin-bottom: 5px;">• 14:30 - Ventas DB: Exitoso (1,234 registros)</div>
+                                        <div style="margin-bottom: 5px;">• 14:25 - Marketing API: En curso...</div>
+                                        <div style="margin-bottom: 5px;">• 14:20 - Inventario CSV: Fallido (timeout)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                dashboard: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-chart-line"></i> Manejo de Reportes & Dashboards</h2>
+                        <p>Diseño drag-and-drop con control de versiones</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como analista, quiero arrastrar widgets para armar dashboards y guardar múltiples versiones, para comparar diferentes diseños y revertir cambios.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-mouse"></i>
+                                </div>
+                                <h3>Lienzo de Diseño Drag-and-Drop</h3>
+                            </div>
+                            <div class="feature-description">
+                                Panel lateral con lista de widgets (gráficos, tablas, textos), que el usuario arrastra al lienzo principal; mientras tanto, un placeholder muestra las zonas disponibles, guiando la colocación.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; gap: 15px; min-height: 300px;">
+                                    <div style="width: 200px; background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                        <h6 style="margin-bottom: 15px;">🧩 Widgets</h6>
+                                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                                            <div style="padding: 10px; background: white; border-radius: 8px; border: 1px solid #ddd; cursor: grab; text-align: center;">
+                                                <div style="font-size: 1.5rem; margin-bottom: 5px;">📊</div>
+                                                <div style="font-size: 0.7rem;">Gráfico de Barras</div>
+                                            </div>
+                                            <div style="padding: 10px; background: white; border-radius: 8px; border: 1px solid #ddd; cursor: grab; text-align: center;">
+                                                <div style="font-size: 1.5rem; margin-bottom: 5px;">📈</div>
+                                                <div style="font-size: 0.7rem;">Gráfico de Líneas</div>
+                                            </div>
+                                            <div style="padding: 10px; background: white; border-radius: 8px; border: 1px solid #ddd; cursor: grab; text-align: center;">
+                                                <div style="font-size: 1.5rem; margin-bottom: 5px;">📋</div>
+                                                <div style="font-size: 0.7rem;">Tabla</div>
+                                            </div>
+                                            <div style="padding: 10px; background: white; border-radius: 8px; border: 1px solid #ddd; cursor: grab; text-align: center;">
+                                                <div style="font-size: 1.5rem; margin-bottom: 5px;">📝</div>
+                                                <div style="font-size: 0.7rem;">Texto</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1; background: #f8f9fa; border-radius: 10px; padding: 20px; border: 2px dashed #dee2e6; position: relative;">
+                                        <h6 style="margin-bottom: 15px;">🎨 Lienzo de Diseño</h6>
+                                        <div style="height: 100px; background: white; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center;">
+                                            <div style="text-align: center;">
+                                                <div style="font-size: 1.5rem; margin-bottom: 5px;">📊</div>
+                                                <div style="font-size: 0.8rem;">Gráfico de Ventas</div>
+                                            </div>
+                                        </div>
+                                        <div style="height: 60px; background: white; border-radius: 8px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center;">
+                                            <div style="text-align: center;">
+                                                <div style="font-size: 1.2rem; margin-bottom: 5px;">📝</div>
+                                                <div style="font-size: 0.8rem;">Título del Dashboard</div>
+                                            </div>
+                                        </div>
+                                        <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(102, 126, 234, 0.1); border: 2px dashed #667eea; border-radius: 8px; padding: 20px; font-size: 0.8rem; color: #667eea;">
+                                            📍 Arrastra aquí
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-save"></i>
+                                </div>
+                                <h3>Guardado y Control de Versiones</h3>
+                            </div>
+                            <div class="feature-description">
+                                Botón "Guardar dashboard" abre un modal donde el usuario nombra la versión y añade una descripción; tras guardar, un snackbar confirma el resultado y muestra el número de versión. Dropdown de versiones que permite seleccionar y visualizar dashboards anteriores.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="btn" style="font-size: 0.8rem;">💾 Guardar Dashboard</button>
+                                        <select style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.8rem;">
+                                            <option>Versión 3 (actual)</option>
+                                            <option>Versión 2</option>
+                                            <option>Versión 1</option>
+                                        </select>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: #666;">
+                                        Última modificación: hace 5 min
+                                    </div>
+                                </div>
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                    <h6>Modal: Guardar Versión</h6>
+                                    <div style="margin: 10px 0;">
+                                        <label style="display: block; margin-bottom: 5px; font-size: 0.8rem;">Nombre de la versión:</label>
+                                        <input type="text" class="input-demo" placeholder="v3.1 - Mejoras en gráficos" style="margin: 5px 0;">
+                                    </div>
+                                    <div style="margin: 10px 0;">
+                                        <label style="display: block; margin-bottom: 5px; font-size: 0.8rem;">Descripción:</label>
+                                        <textarea class="input-demo" placeholder="Añadidos nuevos widgets de análisis..." style="margin: 5px 0; resize: vertical; height: 60px;"></textarea>
+                                    </div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="btn" style="font-size: 0.8rem;">Guardar</button>
+                                        <button class="btn" style="font-size: 0.8rem; background: #6c757d;">Cancelar</button>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 15px; padding: 10px; background: #d4edda; border-radius: 5px; color: #155724; font-size: 0.8rem;">
+                                    ✅ Dashboard guardado como versión 3.1
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-tags"></i>
+                                </div>
+                                <h3>Etiquetado y Filtrado</h3>
+                            </div>
+                            <div class="feature-description">
+                                Al guardar, el usuario asigna etiquetas flexibles (autocompletadas con las existentes o creadas al vuelo), facilitando la búsqueda posterior. En la vista de proyectos, filtros por etiqueta muestran sólo los dashboards etiquetados con los criterios seleccionados.
+                            </div>
+                            <div class="mockup">
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-size: 0.8rem;">Etiquetas:</label>
+                                    <input type="text" class="input-demo" placeholder="Escribe etiquetas..." style="margin: 5px 0;">
+                                    <div style="display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap;">
+                                        <span style="background: #667eea; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">ventas</span>
+                                        <span style="background: #f5576c; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">q1</span>
+                                        <span style="background: #4facfe; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">activo</span>
+                                        <span style="background: #28a745; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">+ nuevo</span>
+                                    </div>
+                                </div>
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                    <h6 style="margin-bottom: 10px;">🔍 Filtros Activos</h6>
+                                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                        <button style="padding: 5px 10px; background: #667eea; color: white; border: none; border-radius: 15px; font-size: 0.7rem;">ventas ×</button>
+                                        <button style="padding: 5px 10px; background: #f5576c; color: white; border: none; border-radius: 15px; font-size: 0.7rem;">q1 ×</button>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: #666;">
+                                        Mostrando 3 dashboards con etiquetas: ventas, q1
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                chat: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-comments"></i> Interfaz de Chat IA</h2>
+                        <p>Conversación natural con tus datos para obtener insights inmediatos</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como usuario, quiero conversar en lenguaje natural con mis datos, para obtener insights rápidos sin navegar menús.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-keyboard"></i>
+                                </div>
+                                <h3>Componente de Entrada de Usuario</h3>
+                            </div>
+                            <div class="feature-description">
+                                Campo de texto multilinea con placeholder sugestivo. Indicador de escritura ("el agente está escribiendo…").
+                            </div>
+                            <div class="mockup mockup-interactive">
+                                <div style="background: white; border-radius: 25px; padding: 15px; margin: 10px 0; display: flex; align-items: center; gap: 10px;">
+                                    <textarea placeholder="Pregúntame sobre tus datos..." style="flex: 1; border: none; outline: none; font-size: 1rem; resize: none; min-height: 40px;" rows="1"></textarea>
+                                    <button style="background: #667eea; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                    <div style="width: 8px; height: 8px; background: #667eea; border-radius: 50%; animation: pulse 1.5s infinite;"></div>
+                                    <p style="font-size: 0.8rem; opacity: 0.8;">El agente está escribiendo...</p>
+                                </div>
+                                <div style="margin-top: 10px; background: #f8f9fa; border-radius: 10px; padding: 10px;">
+                                    <p style="font-size: 0.8rem; color: #666; margin-bottom: 5px;">💡 Sugerencias:</p>
+                                    <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                        <span style="background: #e9ecef; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; cursor: pointer;">¿Cuántas ventas hubo este mes?</span>
+                                        <span style="background: #e9ecef; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; cursor: pointer;">Mostrar top 5 productos</span>
+                                        <span style="background: #e9ecef; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; cursor: pointer;">Gráfico de tendencias</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-chart-area"></i>
+                                </div>
+                                <h3>Renderizado de Respuestas Ricas</h3>
+                            </div>
+                            <div class="feature-description">
+                                Bloques diferenciados para texto, tablas y gráficos, con acciones de copiar y descargar. Scroll infinito con botón "Ir abajo".
+                            </div>
+                            <div class="mockup">
+                                <div style="background: white; border-radius: 10px; padding: 15px; margin: 10px 0; text-align: left; border: 1px solid #e9ecef;">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                        <div style="width: 30px; height: 30px; background: #667eea; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-robot" style="color: white; font-size: 0.8rem;"></i>
+                                        </div>
+                                        <strong>IA</strong>
+                                    </div>
+                                    <p style="margin-bottom: 15px;">He encontrado un aumento del 25% en ventas este trimestre. Aquí tienes los detalles:</p>
+                                    <div style="background: #f8f9fa; border-radius: 8px; padding: 15px; margin: 10px 0; border: 1px solid #dee2e6;">
+                                        <div class="chart-demo" style="height: 120px; font-size: 0.9rem;">📊 Gráfico de Ventas Q1-Q3</div>
+                                    </div>
+                                    <div style="border: 1px solid #dee2e6; border-radius: 5px; overflow: hidden; margin: 10px 0;">
+                                        <div style="background: #f8f9fa; padding: 8px; font-size: 0.8rem; font-weight: bold;">📋 Tabla de Datos</div>
+                                        <div style="padding: 8px; font-size: 0.8rem;">
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; text-align: center;">
+                                                <div><strong>Q1</strong><br>$15,000</div>
+                                                <div><strong>Q2</strong><br>$18,000</div>
+                                                <div><strong>Q3</strong><br>$22,500</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                        <button class="btn" style="font-size: 0.8rem; padding: 0.5rem 1rem;">📋 Copiar</button>
+                                        <button class="btn" style="font-size: 0.8rem; padding: 0.5rem 1rem;">⬇️ Descargar</button>
+                                        <button class="btn" style="font-size: 0.8rem; padding: 0.5rem 1rem; background: #6c757d;">🔗 Compartir</button>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 15px;">
+                                    <button class="btn" style="background: #17a2b8; font-size: 0.8rem;">⬇️ Ir abajo</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h3>Refinamiento y Sugerencias</h3>
+                            </div>
+                            <div class="feature-description">
+                                Botones "¿Refinar?" y chips de preguntas relacionadas.
+                            </div>
+                            <div class="mockup">
+                                <div style="margin-bottom: 15px;">
+                                    <button class="btn" style="font-size: 0.8rem;">🔍 ¿Refinar?</button>
+                                    <button class="btn" style="font-size: 0.8rem; background: #17a2b8;">💡 ¿Más detalle?</button>
+                                </div>
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                    <p style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">🤔 Preguntas relacionadas:</p>
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <span style="background: #e9ecef; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; border: 1px solid #dee2e6;">¿Qué productos vendieron más?</span>
+                                        <span style="background: #e9ecef; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; border: 1px solid #dee2e6;">¿Comparar con año anterior?</span>
+                                        <span style="background: #e9ecef; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; border: 1px solid #dee2e6;">¿Análisis por región?</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <h3>Manejo de Errores en UI</h3>
+                            </div>
+                            <div class="feature-description">
+                                Mensajes descriptivos y banner "Reconectando…".
+                            </div>
+                            <div class="mockup">
+                                <div style="margin-bottom: 15px; padding: 15px; background: #f8d7da; border-radius: 10px; border: 1px solid #f5c6cb; color: #721c24;">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <strong>Error de conexión</strong>
+                                    </div>
+                                    <p style="font-size: 0.9rem; margin-bottom: 10px;">No se pudo procesar tu consulta. Verifica tu conexión a internet.</p>
+                                    <button class="btn" style="font-size: 0.8rem; background: #dc3545;">🔄 Reintentar</button>
+                                </div>
+                                <div style="padding: 15px; background: #fff3cd; border-radius: 10px; border: 1px solid #ffeaa7; color: #856404;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <i class="fas fa-wifi" style="animation: pulse 2s infinite;"></i>
+                                        <span>Reconectando... 🔄</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                dashboard: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-chart-line"></i> Manejo de Reportes & Dashboards</h2>
+                        <p>Construcción visual de dashboards con control de versiones</p>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-mouse-pointer"></i>
+                                </div>
+                                <h3>Lienzo Drag & Drop</h3>
+                            </div>
+                            <div class="feature-description">
+                                Arrastra widgets desde el panel lateral al lienzo principal para crear dashboards personalizados.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; gap: 10px;">
+                                    <div style="width: 30%; background: #f8f9fa; border-radius: 8px; padding: 10px;">
+                                        <h5>Widgets</h5>
+                                        <div style="padding: 5px; border: 1px dashed #ccc; border-radius: 4px; margin: 5px 0; cursor: grab;">📊 Gráfico</div>
+                                        <div style="padding: 5px; border: 1px dashed #ccc; border-radius: 4px; margin: 5px 0; cursor: grab;">📋 Tabla</div>
+                                        <div style="padding: 5px; border: 1px dashed #ccc; border-radius: 4px; margin: 5px 0; cursor: grab;">📝 Texto</div>
+                                    </div>
+                                    <div style="flex: 1; border: 2px dashed #dee2e6; border-radius: 8px; min-height: 150px; display: flex; align-items: center; justify-content: center; color: #6c757d;">
+                                        Arrastra widgets aquí
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                visualization: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-chart-bar"></i> Visualización Dinámica de Datos</h2>
+                        <p>Gráficos interactivos con configuración avanzada</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como analista, quiero seleccionar distintos tipos de gráficos y ajustar sus propiedades, para comunicar mis insights de forma óptima.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <h3>Selección de Tipo de Gráfico</h3>
+                            </div>
+                            <div class="feature-description">
+                                Menú desplegable con opciones (barras, líneas, pastel, scatter, mapa de calor), que incluye un mini-preview al pasar el cursor.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 15px;">
+                                    <div style="text-align: center; padding: 15px; border: 2px solid #667eea; border-radius: 8px; background: #667eea; color: white; cursor: pointer;">
+                                        <div style="font-size: 1.5rem; margin-bottom: 5px;">📊</div>
+                                        <div style="font-size: 0.7rem;">Barras</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                                        <div style="font-size: 1.5rem; margin-bottom: 5px;">📈</div>
+                                        <div style="font-size: 0.7rem;">Líneas</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                                        <div style="font-size: 1.5rem; margin-bottom: 5px;">🥧</div>
+                                        <div style="font-size: 0.7rem;">Circular</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                                        <div style="font-size: 1.5rem; margin-bottom: 5px;">📉</div>
+                                        <div style="font-size: 0.7rem;">Scatter</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                                        <div style="font-size: 1.5rem; margin-bottom: 5px;">🔥</div>
+                                        <div style="font-size: 0.7rem;">Calor</div>
+                                    </div>
+                                </div>
+                                <div class="chart-demo" style="margin-top: 15px;">Gráfico de Barras - Ventas por Región</div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-sliders-h"></i>
+                                </div>
+                                <h3>Configuración de Propiedades</h3>
+                            </div>
+                            <div class="feature-description">
+                                Panel lateral para ajustar ejes, leyenda, títulos y etiquetas, con live-preview del gráfico en tiempo real.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; gap: 15px;">
+                                    <div style="width: 40%; background: #f8f9fa; border-radius: 8px; padding: 15px; font-size: 0.8rem;">
+                                        <h6 style="margin-bottom: 10px;">⚙️ Configuración</h6>
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; margin-bottom: 5px;">Título:</label>
+                                            <input type="text" class="input-demo" value="Ventas por Región" style="margin: 5px 0;">
+                                        </div>
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; margin-bottom: 5px;">Eje X:</label>
+                                            <input type="text" class="input-demo" value="Regiones" style="margin: 5px 0;">
+                                        </div>
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; margin-bottom: 5px;">Eje Y:</label>
+                                            <input type="text" class="input-demo" value="Ventas ($)" style="margin: 5px 0;">
+                                        </div>
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; margin-bottom: 5px;">Color:</label>
+                                            <input type="color" value="#667eea" style="width: 100%; height: 40px; border: 1px solid #ddd; border-radius: 5px;">
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <input type="checkbox" id="showLegend" checked>
+                                            <label for="showLegend">Mostrar leyenda</label>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; min-height: 200px;">
+                                        <div style="text-align: center;">
+                                            <div style="font-size: 3rem; margin-bottom: 10px;">📊</div>
+                                            <div style="font-weight: bold;">Preview en Vivo</div>
+                                            <div style="font-size: 0.8rem; color: #666;">Ventas por Región</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-mouse-pointer"></i>
+                                </div>
+                                <h3>Interacción sobre la Gráfica</h3>
+                            </div>
+                            <div class="feature-description">
+                                Zoom y paneo con arrastre del ratón o gesto táctil; botones "Reset view" para volver a la vista inicial. Tooltips al pasar por puntos de datos, con información detallada y opción "Copiar valor".
+                            </div>
+                            <div class="mockup">
+                                <div style="position: relative; background: #f8f9fa; border-radius: 10px; padding: 20px; margin-bottom: 15px; min-height: 200px;">
+                                    <div style="position: absolute; top: 10px; left: 10px; display: flex; gap: 5px;">
+                                        <button style="padding: 5px 10px; background: white; border: 1px solid #ddd; border-radius: 3px; font-size: 0.7rem;">🔍 Zoom</button>
+                                        <button style="padding: 5px 10px; background: white; border: 1px solid #ddd; border-radius: 3px; font-size: 0.7rem;">👆 Pan</button>
+                                        <button style="padding: 5px 10px; background: white; border: 1px solid #ddd; border-radius: 3px; font-size: 0.7rem;">🔄 Reset</button>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                                        <div style="font-size: 2rem;">📊</div>
+                                    </div>
+                                    <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; font-size: 0.8rem;">
+                                        <div><strong>Norte: $45,000</strong></div>
+                                        <div style="margin-top: 5px;">
+                                            <button style="padding: 2px 6px; background: #667eea; color: white; border: none; border-radius: 3px; font-size: 0.7rem;">📋 Copiar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; font-size: 0.8rem; color: #666;">
+                                    💡 Arrastra para hacer zoom • Click y arrastra para navegar • Hover para ver detalles
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                carousel: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-images"></i> Tarjetas de Contenido en Carrusel</h2>
+                        <p>Galería de templates y propuestas de visualización</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como usuario, quiero recibir varias propuestas de visualización basadas en mi pregunta al chat, presentadas en tarjetas dentro de un carrusel, para elegir la opción más adecuada y luego personalizarla a mi gusto.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <h3>Galería de Templates</h3>
+                            </div>
+                            <div class="feature-description">
+                                Carrusel horizontal con tarjetas que muestran distintas versiones de gráficos o tablas generadas automáticamente en respuesta a la consulta; cada tarjeta lleva título descriptivo y miniatura representativa.
+                            </div>
+                            <div class="mockup">
+                                <div style="position: relative; overflow: hidden; border-radius: 10px;">
+                                    <div style="display: flex; gap: 15px; overflow-x: auto; padding: 15px 0; scroll-behavior: smooth;">
+                                        <div style="min-width: 220px; border: 3px solid #667eea; border-radius: 10px; padding: 15px; text-align: center; background: #667eea; color: white;">
+                                            <div style="height: 100px; background: rgba(255,255,255,0.2); border-radius: 5px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">📊</div>
+                                            <h6 style="margin-bottom: 5px;">Gráfico de Barras</h6>
+                                            <p style="font-size: 0.8rem; opacity: 0.9;">Ventas por trimestre</p>
+                                        </div>
+                                        <div style="min-width: 220px; border: 2px solid #ddd; border-radius: 10px; padding: 15px; text-align: center; background: white;">
+                                            <div style="height: 100px; background: #f8f9fa; border-radius: 5px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">📈</div>
+                                            <h6 style="margin-bottom: 5px;">Línea de Tiempo</h6>
+                                            <p style="font-size: 0.8rem; color: #666;">Evolución temporal</p>
+                                        </div>
+                                        <div style="min-width: 220px; border: 2px solid #ddd; border-radius: 10px; padding: 15px; text-align: center; background: white;">
+                                            <div style="height: 100px; background: #f8f9fa; border-radius: 5px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🥧</div>
+                                            <h6 style="margin-bottom: 5px;">Gráfico Circular</h6>
+                                            <p style="font-size: 0.8rem; color: #666;">Distribución por categoría</p>
+                                        </div>
+                                        <div style="min-width: 220px; border: 2px solid #ddd; border-radius: 10px; padding: 15px; text-align: center; background: white;">
+                                            <div style="height: 100px; background: #f8f9fa; border-radius: 5px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">📋</div>
+                                            <h6 style="margin-bottom: 5px;">Tabla Detallada</h6>
+                                            <p style="font-size: 0.8rem; color: #666;">Datos tabulares</p>
+                                        </div>
+                                    </div>
+                                    <button style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: white; border: 1px solid #ddd; border-radius: 50%; width: 40px; height: 40px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: white; border: 1px solid #ddd; border-radius: 50%; width: 40px; height: 40px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div style="text-align: center; margin-top: 15px;">
+                                    <div style="display: inline-flex; gap: 5px;">
+                                        <div style="width: 10px; height: 10px; background: #667eea; border-radius: 50%;"></div>
+                                        <div style="width: 10px; height: 10px; background: #ddd; border-radius: 50%;"></div>
+                                        <div style="width: 10px; height: 10px; background: #ddd; border-radius: 50%;"></div>
+                                        <div style="width: 10px; height: 10px; background: #ddd; border-radius: 50%;"></div>
+                                    </div>
+                                    <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">1 de 4 propuestas</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-spinner"></i>
+                                </div>
+                                <h3>Estados de Carga y Ausencia</h3>
+                            </div>
+                            <div class="feature-description">
+                                Mientras llegan las propuestas, se muestran skeleton cards que simulan el contenido; si no hay propuestas, un mensaje ilustrado ("No se encontraron visualizaciones") invita al usuario a reformular la pregunta.
+                            </div>
+                            <div class="mockup">
+                                <div style="margin-bottom: 20px;">
+                                    <h6 style="margin-bottom: 10px;">🔄 Estado de Carga</h6>
+                                    <div style="display: flex; gap: 15px; overflow-x: auto;">
+                                        <div style="min-width: 200px; border: 2px solid #f0f0f0; border-radius: 10px; padding: 15px; background: #f8f9fa; animation: pulse 2s infinite;">
+                                            <div style="height: 80px; background: #e9ecef; border-radius: 5px; margin-bottom: 10px;"></div>
+                                            <div style="height: 15px; background: #e9ecef; border-radius: 3px; margin-bottom: 5px;"></div>
+                                            <div style="height: 10px; background: #e9ecef; border-radius: 3px; width: 70%;"></div>
+                                        </div>
+                                        <div style="min-width: 200px; border: 2px solid #f0f0f0; border-radius: 10px; padding: 15px; background: #f8f9fa; animation: pulse 2s infinite;">
+                                            <div style="height: 80px; background: #e9ecef; border-radius: 5px; margin-bottom: 10px;"></div>
+                                            <div style="height: 15px; background: #e9ecef; border-radius: 3px; margin-bottom: 5px;"></div>
+                                            <div style="height: 10px; background: #e9ecef; border-radius: 3px; width: 70%;"></div>
+                                        </div>
+                                    </div>
+                                    <p style="text-align: center; font-size: 0.8rem; color: #666; margin-top: 10px;">
+                                        <i class="fas fa-spinner fa-spin"></i> Cargando más plantillas...
+                                    </p>
+                                </div>
+                                <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; border: 2px dashed #dee2e6;">
+                                    <div style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;">🔍</div>
+                                    <h6 style="margin-bottom: 10px; color: #666;">No se encontraron visualizaciones</h6>
+                                    <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Intenta reformular tu pregunta o usar términos más específicos</p>
+                                    <button class="btn" style="font-size: 0.8rem;">💡 Sugerir alternativas</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                alerts: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-bell"></i> Alertas & Programación</h2>
+                        <p>Sistema de notificaciones inteligente basado en KPIs</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como usuario, quiero definir reglas para recibir notificaciones cuando mis KPIs crucen umbrales, para vigilar métricas críticas sin supervisión manual.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-magic"></i>
+                                </div>
+                                <h3>Creación de Reglas Paso a Paso</h3>
+                            </div>
+                            <div class="feature-description">
+                                Asistente en varias pantallas donde el usuario selecciona el KPI, el operador (>, <, =), el valor umbral y revisa un resumen antes de confirmar.
+                            </div>
+                            <div class="mockup">
+                                <div style="margin-bottom: 20px;">
+                                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                        <div style="width: 30px; height: 30px; background: #667eea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">1</div>
+                                        <div style="width: 30px; height: 30px; background: #667eea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">2</div>
+                                        <div style="width: 30px; height: 30px; background: #e9ecef; color: #6c757d; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">3</div>
+                                        <div style="width: 30px; height: 30px; background: #e9ecef; color: #6c757d; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">4</div>
+                                    </div>
+                                    <p style="font-size: 0.8rem; color: #666;">Paso 2: Configurar condición</p>
+                                </div>
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px; font-size: 0.8rem;">KPI a monitorear:</label>
+                                        <select class="input-demo" style="margin: 0;">
+                                            <option>Ventas totales</option>
+                                            <option>Usuarios activos</option>
+                                            <option>Conversión</option>
+                                            <option>Ingresos</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                        <div style="flex: 1;">
+                                            <label style="display: block; margin-bottom: 5px; font-size: 0.8rem;">Operador:</label>
+                                            <select class="input-demo" style="margin: 0;">
+                                                <option>></option>
+                                                <option><</option>
+                                                <option>=</option>
+                                                <option>>=</option>
+                                                <option><=</option>
+                                            </select>
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label style="display: block; margin-bottom: 5px; font-size: 0.8rem;">Valor umbral:</label>
+                                            <input type="number" class="input-demo" placeholder="1000" style="margin: 0;">
+                                        </div>
+                                    </div>
+                                    <div style="background: #fff3cd; padding: 10px; border-radius: 5px; border: 1px solid #ffeaa7; margin-bottom: 15px;">
+                                        <p style="font-size: 0.8rem; color: #856404; margin: 0;">📝 Resumen: Notificar cuando <strong>Ventas totales > 1000</strong></p>
+                                    </div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="btn" style="font-size: 0.8rem;">← Anterior</button>
+                                        <button class="btn" style="font-size: 0.8rem;">Siguiente →</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <h3>Selección de Canales de Notificación</h3>
+                            </div>
+                            <div class="feature-description">
+                                Opciones (email, SMS, Slack, push) presentadas con iconos y descripciones, que el usuario activa mediante toggles.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                                    <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 1.5rem;">📧</div>
+                                            <div>
+                                                <div style="font-weight: bold; font-size: 0.9rem;">Email</div>
+                                                <div style="font-size: 0.7rem; color: #666;">Notificaciones por correo</div>
+                                            </div>
+                                            <label style="position: relative; display: inline-block; width: 50px; height: 24px; margin-left: auto;">
+                                                <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #667eea; transition: .4s; border-radius: 24px;"></span>
+                                            </label>
+                                        </div>
+                                        <input type="email" class="input-demo" placeholder="tu@email.com" style="margin: 0; font-size: 0.8rem;">
+                                    </div>
+                                    <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 1.5rem;">📱</div>
+                                            <div>
+                                                <div style="font-weight: bold; font-size: 0.9rem;">SMS</div>
+                                                <div style="font-size: 0.7rem; color: #666;">Mensajes de texto</div>
+                                            </div>
+                                            <label style="position: relative; display: inline-block; width: 50px; height: 24px; margin-left: auto;">
+                                                <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px;"></span>
+                                            </label>
+                                        </div>
+                                        <input type="tel" class="input-demo" placeholder="+34 123 456 789" style="margin: 0; font-size: 0.8rem;">
+                                    </div>
+                                    <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 1.5rem;">💬</div>
+                                            <div>
+                                                <div style="font-weight: bold; font-size: 0.9rem;">Slack</div>
+                                                <div style="font-size: 0.7rem; color: #666;">Canal de equipo</div>
+                                            </div>
+                                            <label style="position: relative; display: inline-block; width: 50px; height: 24px; margin-left: auto;">
+                                                <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #667eea; transition: .4s; border-radius: 24px;"></span>
+                                            </label>
+                                        </div>
+                                        <input type="text" class="input-demo" placeholder="#ventas" style="margin: 0; font-size: 0.8rem;">
+                                    </div>
+                                    <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 1.5rem;">🔔</div>
+                                            <div>
+                                                <div style="font-weight: bold; font-size: 0.9rem;">Push</div>
+                                                <div style="font-size: 0.7rem; color: #666;">Notificaciones del navegador</div>
+                                            </div>
+                                            <label style="position: relative; display: inline-block; width: 50px; height: 24px; margin-left: auto;">
+                                                <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px;"></span>
+                                            </label>
+                                        </div>
+                                        <p style="font-size: 0.7rem; color: #666; margin: 0;">Se requiere permiso del navegador</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-list"></i>
+                                </div>
+                                <h3>Panel de Gestión de Alertas</h3>
+                            </div>
+                            <div class="feature-description">
+                                Tabla o tarjetas listando todas las reglas creadas, con estado (activa/pausada), última vez disparada y acciones rápidas ("Editar", "Pausar", "Eliminar").
+                            </div>
+                            <div class="mockup">
+                                <div style="background: #f8f9fa; border-radius: 10px; overflow: hidden; border: 1px solid #dee2e6;">
+                                    <div style="background: #667eea; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                        <h6 style="margin: 0;">🔔 Alertas Configuradas</h6>
+                                        <button class="btn" style="background: rgba(255,255,255,0.2); font-size: 0.7rem; padding: 0.5rem 1rem;">+ Nueva Alerta</button>
+                                    </div>
+                                    <div style="padding: 15px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e9ecef;">
+                                            <div style="flex: 1;">
+                                                <div style="font-weight: bold; margin-bottom: 5px;">📊 Ventas > 1000</div>
+                                                <div style="font-size: 0.8rem; color: #666;">Última activación: Hace 2 horas</div>
+                                            </div>
+                                            <div style="display: flex; gap: 10px; align-items: center;">
+                                                <span style="background: #28a745; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.7rem;">Activa</span>
+                                                <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Editar</button>
+                                                <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Pausar</button>
+                                                <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">🗑️</button>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e9ecef;">
+                                            <div style="flex: 1;">
+                                                <div style="font-weight: bold; margin-bottom: 5px;">👥 Usuarios < 50</div>
+                                                <div style="font-size: 0.8rem; color: #666;">Última activación: Nunca</div>
+                                            </div>
+                                            <div style="display: flex; gap: 10px; align-items: center;">
+                                                <span style="background: #ffc107; color: black; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.7rem;">Pausada</span>
+                                                <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Editar</button>
+                                                <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">Activar</button>
+                                                <button style="padding: 5px 10px; border: 1px solid #ddd; background: white; border-radius: 3px; font-size: 0.7rem;">🗑️</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <h3>Notificaciones en Vivo</h3>
+                            </div>
+                            <div class="feature-description">
+                                Toasts emergentes en la esquina de la pantalla o badge en el icono de alertas, que al hacer clic despliegan los detalles de la alerta y ofrecen un enlace directo al KPI correspondiente.
+                            </div>
+                            <div class="mockup">
+                                <div style="position: relative; height: 200px; background: #f8f9fa; border-radius: 10px; border: 1px solid #dee2e6;">
+                                    <div style="position: absolute; top: 20px; right: 20px; background: white; border-radius: 10px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 4px solid #f5576c; max-width: 300px;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 1.2rem;">🚨</div>
+                                            <div style="font-weight: bold; font-size: 0.9rem;">Alerta Activada</div>
+                                            <button style="border: none; background: none; font-size: 0.8rem; margin-left: auto; cursor: pointer;">×</button>
+                                        </div>
+                                        <p style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">Ventas superaron 1000 (actual: 1,245)</p>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #667eea; color: white; border: none; border-radius: 3px; font-size: 0.7rem;">Ver KPI</button>
+                                            <button style="padding: 5px 10px; background: #6c757d; color: white; border: none; border-radius: 3px; font-size: 0.7rem;">Pausar</button>
+                                        </div>
+                                    </div>
+                                    <div style="position: absolute; top: 20px; left: 20px; background: #667eea; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; position: relative;">
+                                        <i class="fas fa-bell"></i>
+                                        <div style="position: absolute; top: -5px; right: -5px; background: #dc3545; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">3</div>
+                                    </div>
+                                    <div style="position: absolute; bottom: 20px; left: 20px; font-size: 0.8rem; color: #666;">
+                                        💡 Las notificaciones aparecen aquí en tiempo real
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                logs: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-history"></i> Logs & Auditoría (UI)</h2>
+                        <p>Historial completo de cambios y comparación de versiones</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como usuario, quiero revisar un historial de mis acciones y comparar versiones, para entender cómo evolucionó mi dashboard y quién realizó cada cambio.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h3>Timeline de Acciones</h3>
+                            </div>
+                            <div class="feature-description">
+                                Vista en formato cronológico donde cada evento (añadir widget, mover elemento, guardar versión) aparece with fecha, hora y breve descripción.
+                            </div>
+                            <div class="mockup">
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                                        <input type="text" class="input-demo" placeholder="🔍 Buscar en logs..." style="flex: 1; margin: 0;">
+                                        <select style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.8rem;">
+                                            <option>Todas las acciones</option>
+                                            <option>Drag & Drop</option>
+                                            <option>Guardado</option>
+                                            <option>Eliminación</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="border-left: 4px solid #667eea; padding-left: 20px; position: relative;">
+                                    <div style="margin-bottom: 20px; position: relative;">
+                                        <div style="position: absolute; left: -27px; top: 0; width: 20px; height: 20px; background: #667eea; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-plus" style="font-size: 0.6rem; color: white;"></i>
+                                        </div>
+                                        <div style="font-size: 0.7rem; color: #666; margin-bottom: 5px;">Hace 2 min • 14:32</div>
+                                        <div style="font-weight: bold; margin-bottom: 5px;">📊 Widget de gráfico añadido</div>
+                                        <div style="font-size: 0.8rem; color: #666;">Por Juan Pérez • Gráfico de barras</div>
+                                    </div>
+                                    <div style="margin-bottom: 20px; position: relative;">
+                                        <div style="position: absolute; left: -27px; top: 0; width: 20px; height: 20px; background: #28a745; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-save" style="font-size: 0.6rem; color: white;"></i>
+                                        </div>
+                                        <div style="font-size: 0.7rem; color: #666; margin-bottom: 5px;">Hace 5 min • 14:29</div>
+                                        <div style="font-weight: bold; margin-bottom: 5px;">💾 Dashboard guardado como v3</div>
+                                        <div style="font-size: 0.8rem; color: #666;">Por Juan Pérez • "Dashboard ventas Q1"</div>
+                                    </div>
+                                    <div style="margin-bottom: 20px; position: relative;">
+                                        <div style="position: absolute; left: -27px; top: 0; width: 20px; height: 20px; background: #ffc107; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-arrows-alt" style="font-size: 0.6rem; color: white;"></i>
+                                        </div>
+                                        <div style="font-size: 0.7rem; color: #666; margin-bottom: 5px;">Hace 1 hora • 13:45</div>
+                                        <div style="font-weight: bold; margin-bottom: 5px;">🎨 Tema cambiado a oscuro</div>
+                                        <div style="font-size: 0.8rem; color: #666;">Por Juan Pérez • Configuración visual</div>
+                                    </div>
+                                    <div style="margin-bottom: 20px; position: relative;">
+                                        <div style="position: absolute; left: -27px; top: 0; width: 20px; height: 20px; background: #dc3545; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-trash" style="font-size: 0.6rem; color: white;"></i>
+                                        </div>
+                                        <div style="font-size: 0.7rem; color: #666; margin-bottom: 5px;">Hace 2 horas • 12:30</div>
+                                        <div style="font-weight: bold; margin-bottom: 5px;">🗑️ Widget eliminado</div>
+                                        <div style="font-size: 0.8rem; color: #666;">Por Ana García • Tabla de datos</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-code-branch"></i>
+                                </div>
+                                <h3>Comparación Visual de Versiones</h3>
+                            </div>
+                            <div class="feature-description">
+                                Selector de dos versiones para ver los títulos de los widgets que se añadieron, eliminaron o modificaron.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; gap: 15px; margin-bottom: 15px; align-items: center;">
+                                    <div style="flex: 1;">
+                                        <label style="display: block; margin-bottom: 5px; font-size: 0.8rem;">Versión A:</label>
+                                        <select class="input-demo" style="margin: 0;">
+                                            <option>Versión 3 (actual)</option>
+                                            <option>Versión 2</option>
+                                            <option>Versión 1</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 20px; font-size: 1.2rem; font-weight: bold;">vs</div>
+                                    <div style="flex: 1;">
+                                        <label style="display: block; margin-bottom: 5px; font-size: 0.8rem;">Versión B:</label>
+                                        <select class="input-demo" style="margin: 0;">
+                                            <option>Versión 2</option>
+                                            <option>Versión 1</option>
+                                            <option>Versión 3 (actual)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #dee2e6;">
+                                    <h6 style="margin-bottom: 10px;">📊 Diferencias encontradas:</h6>
+                                    <div style="background: #d4edda; padding: 10px; border-radius: 5px; margin-bottom: 8px; border-left: 4px solid #28a745;">
+                                        <div style="font-size: 0.8rem; color: #155724;">
+                                            <strong>+ Añadido:</strong> Gráfico de barras "Ventas por región"
+                                        </div>
+                                    </div>
+                                    <div style="background: #f8d7da; padding: 10px; border-radius: 5px; margin-bottom: 8px; border-left: 4px solid #dc3545;">
+                                        <div style="font-size: 0.8rem; color: #721c24;">
+                                            <strong>- Eliminado:</strong> Tabla de datos "Clientes"
+                                        </div>
+                                    </div>
+                                    <div style="background: #fff3cd; padding: 10px; border-radius: 5px; border-left: 4px solid #ffc107;">
+                                        <div style="font-size: 0.8rem; color: #856404;">
+                                            <strong>~ Modificado:</strong> Título cambió de "Dashboard" a "Ventas Q1"
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 15px;">
+                                    <button class="btn" style="font-size: 0.8rem;">📋 Exportar Diferencias</button>
+                                    <button class="btn" style="font-size: 0.8rem; background: #6c757d;">↩️ Revertir a Versión 2</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                collaboration: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-users"></i> Colaboración & Compartición</h2>
+                        <p>Trabajo en equipo con permisos y comentarios</p>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <h3>Invitación y Permisos</h3>
+                            </div>
+                            <div class="feature-description">
+                                Modal para añadir usuarios por email y asignar roles (lector, editor, administrador).
+                            </div>
+                            <div class="mockup">
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px;">
+                                    <input type="email" class="input-demo" placeholder="usuario@empresa.com" style="margin: 5px 0;">
+                                    <select class="input-demo" style="margin: 5px 0;">
+                                        <option>Editor</option>
+                                        <option>Lector</option>
+                                        <option>Administrador</option>
+                                    </select>
+                                    <button class="btn" style="font-size: 0.8rem;">Invitar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-link"></i>
+                                </div>
+                                <h3>Enlaces Seguros</h3>
+                            </div>
+                            <div class="feature-description">
+                                Botón "Copiar enlace" con opciones de expiración y contraseña.
+                            </div>
+                            <div class="mockup">
+                                <button class="btn" style="font-size: 0.8rem;">🔗 Copiar Enlace</button>
+                                <div style="margin-top: 10px; padding: 10px; background: #d4edda; border-radius: 5px; color: #155724; font-size: 0.8rem;">
+                                    ✅ Enlace copiado al portapapeles
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <h3>Comentarios</h3>
+                            </div>
+                            <div class="feature-description">
+                                Hilo de conversación asociado a cada widget.
+                            </div>
+                            <div class="mockup">
+                                <div style="background: white; border-radius: 10px; padding: 15px; border: 1px solid #e9ecef;">
+                                    <div style="font-weight: bold; margin-bottom: 10px;">💬 Comentarios</div>
+                                    <div style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                                        <strong>Juan:</strong> Este gráfico necesita más datos
+                                    </div>
+                                    <textarea class="input-demo" placeholder="Escribir comentario..."></textarea>
+                                    <button class="btn" style="font-size: 0.8rem;">Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                export: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-download"></i> Exportación & APIs</h2>
+                        <p>Descarga de datos y documentación de endpoints</p>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-file-export"></i>
+                                </div>
+                                <h3>Menú de Exportación</h3>
+                            </div>
+                            <div class="feature-description">
+                                Dropdown con múltiples formatos de exportación.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="btn" style="font-size: 0.8rem;">📊 CSV</button>
+                                    <button class="btn" style="font-size: 0.8rem;">📈 Excel</button>
+                                    <button class="btn" style="font-size: 0.8rem;">📄 PDF</button>
+                                    <button class="btn" style="font-size: 0.8rem;">🖼️ PNG</button>
+                                </div>
+                                <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 5px; color: #856404; font-size: 0.8rem;">
+                                    ⏳ Generando... 60%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h3>Documentación APIs</h3>
+                            </div>
+                            <div class="feature-description">
+                                Endpoints disponibles con botones de prueba.
+                            </div>
+                            <div class="mockup">
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px;">
+                                    <div style="font-weight: bold; margin-bottom: 10px;">GET /api/dashboards</div>
+                                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">Lista todos los dashboards</div>
+                                    <button class="btn" style="font-size: 0.8rem;">🔗 Copiar URL</button>
+                                    <button class="btn" style="font-size: 0.8rem;">🧪 Probar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                accessibility: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-universal-access"></i> Accesibilidad & Responsividad</h2>
+                        <p>Diseño inclusivo para todos los usuarios</p>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-keyboard"></i>
+                                </div>
+                                <h3>Navegación por Teclado</h3>
+                            </div>
+                            <div class="feature-description">
+                                Componentes navegables con Tab/Enter y roles ARIA.
+                            </div>
+                            <div class="mockup">
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px;">
+                                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">Navega con Tab:</div>
+                                    <button class="btn" style="font-size: 0.8rem; border: 2px solid #667eea;">Botón 1</button>
+                                    <button class="btn" style="font-size: 0.8rem;">Botón 2</button>
+                                    <button class="btn" style="font-size: 0.8rem;">Botón 3</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h3>Diseño Responsivo</h3>
+                            </div>
+                            <div class="feature-description">
+                                Layout adaptable que reorganiza elementos en móvil.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; gap: 10px;">
+                                    <div style="flex: 1; background: #f8f9fa; padding: 10px; border-radius: 5px; text-align: center;">
+                                        <div style="font-size: 0.8rem;">💻 Desktop</div>
+                                        <div style="display: flex; gap: 5px; margin-top: 5px;">
+                                            <div style="background: #667eea; width: 30px; height: 20px; border-radius: 3px;"></div>
+                                            <div style="background: #667eea; width: 30px; height: 20px; border-radius: 3px;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1; background: #f8f9fa; padding: 10px; border-radius: 5px; text-align: center;">
+                                        <div style="font-size: 0.8rem;">📱 Mobile</div>
+                                        <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 5px; align-items: center;">
+                                            <div style="background: #667eea; width: 50px; height: 15px; border-radius: 3px;"></div>
+                                            <div style="background: #667eea; width: 50px; height: 15px; border-radius: 3px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                security: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-shield-alt"></i> Seguridad & Cumplimiento</h2>
+                        <p>Protección de datos y conexiones seguras</p>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <h3>Conexiones HTTPS</h3>
+                            </div>
+                            <div class="feature-description">
+                                Redirección automática a HTTPS con certificados SSL.
+                            </div>
+                            <div class="mockup">
+                                <div style="background: #d4edda; border-radius: 10px; padding: 15px; border: 1px solid #c3e6cb;">
+                                    <div style="font-size: 0.8rem; color: #155724;">
+                                        🔒 Conexión segura establecida
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <h3>Manejo de Tokens</h3>
+                            </div>
+                            <div class="feature-description">
+                                Almacenamiento seguro de JWT con flags de seguridad.
+                            </div>
+                            <div class="mockup">
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 15px;">
+                                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">🔐 Token almacenado de forma segura</div>
+                                    <div style="font-size: 0.7rem; color: #666;">HttpOnly, Secure, SameSite</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </div>
+                                <h3>SSO y OAuth</h3>
+                            </div>
+                            <div class="feature-description">
+                                Integración con proveedores de identidad corporativos.
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="btn" style="font-size: 0.8rem;">🔗 Google</button>
+                                    <button class="btn" style="font-size: 0.8rem;">🔗 Azure AD</button>
+                                    <button class="btn" style="font-size: 0.8rem;">🔗 Okta</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                plugins: `
+                    <div class="content-header">
+                        <h2><i class="fas fa-puzzle-piece"></i> Extensibilidad & Plugins</h2>
+                        <p>Sistema modular para extender funcionalidades</p>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                            <strong>User Story:</strong> Como desarrollador, quiero instalar y configurar plugins desde la UI, para extender la aplicación sin modificar el core.
+                        </div>
+                    </div>
+                    <div class="content-grid">
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                <h3>Galería de Plugins Instalables</h3>
+                            </div>
+                            <div class="feature-description">
+                                Lista de plugins disponibles con nombre, descripción y botones "Instalar", "Actualizar" o "Desinstalar".
+                            </div>
+                            <div class="mockup">
+                                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                    <input type="text" class="input-demo" placeholder="🔍 Buscar plugins..." style="flex: 1; margin: 0;">
+                                    <select style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.8rem;">
+                                        <option>Todos</option>
+                                        <option>Instalados</option>
+                                        <option>Disponibles</option>
+                                        <option>Actualizaciones</option>
+                                    </select>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                    <div style="border: 1px solid #ddd; border-radius: 10px; padding: 15px; background: white;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 2rem;">📊</div>
+                                            <div>
+                                                <div style="font-weight: bold; font-size: 0.9rem;">Chart Advanced</div>
+                                                <div style="font-size: 0.7rem; color: #666;">v2.1.0 • Por DataViz Inc.</div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">
+                                            Gráficos 3D avanzados con interactividad mejorada y animaciones fluidas.
+                                        </div>
+                                        <div style="display: flex; gap: 5px;">
+                                            <button class="btn" style="font-size: 0.7rem; padding: 0.5rem 1rem; flex: 1;">Instalar</button>
+                                            <button style="padding: 0.5rem; border: 1px solid #ddd; background: white; border-radius: 5px;">ℹ️</button>
+                                        </div>
+                                    </div>
+                                    <div style="border: 1px solid #28a745; border-radius: 10px; padding: 15px; background: #f8fff9;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 2rem;">🤖</div>
+                                            <div>
+                                                <div style="font-weight: bold; font-size: 0.9rem;">AI Predictor</div>
+                                                <div style="font-size: 0.7rem; color: #666;">v1.5.2 • Por AI Labs</div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">
+                                            Predicciones con Machine Learning y análisis de tendencias automático.
+                                        </div>
+                                        <div style="display: flex; gap: 5px;">
+                                            <button class="btn" style="font-size: 0.7rem; padding: 0.5rem 1rem; background: #28a745; flex: 1;">Instalado</button>
+                                            <button style="padding: 0.5rem; border: 1px solid #ddd; background: white; border-radius: 5px;">⚙️</button>
+                                        </div>
+                                    </div>
+                                    <div style="border: 1px solid #ffc107; border-radius: 10px; padding: 15px; background: #fffdf5;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 2rem;">📈</div>
+                                            <div>
+                                                <div style="font-weight: bold; font-size: 0.9rem;">Dashboard Builder</div>
+                                                <div style="font-size: 0.7rem; color: #666;">v3.0.1 • Actualización disponible</div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">
+                                            Constructor visual de dashboards con templates predefinidos.
+                                        </div>
+                                        <div style="display: flex; gap: 5px;">
+                                            <button class="btn" style="font-size: 0.7rem; padding: 0.5rem 1rem; background: #ffc107; flex: 1;">Actualizar</button>
+                                            <button style="padding: 0.5rem; border: 1px solid #ddd; background: white; border-radius: 5px;">🗑️</button>
+                                        </div>
+                                    </div>
+                                    <div style="border: 1px solid #ddd; border-radius: 10px; padding: 15px; background: white;">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="font-size: 2rem;">🌐</div>
+                                            <div>
+                                                <div style="font-weight: bold; font-size: 0.9rem;">API Connector</div>
+                                                <div style="font-size: 0.7rem; color: #666;">v1.8.0 • Por DevTools</div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">
+                                            Conectores para APIs populares como Salesforce, HubSpot, Google Analytics.
+                                        </div>
+                                        <div style="display: flex; gap: 5px;">
+                                            <button class="btn" style="font-size: 0.7rem; padding: 0.5rem 1rem; flex: 1;">Instalar</button>
+                                            <button style="padding: 0.5rem; border: 1px solid #ddd; background: white; border-radius: 5px;">⭐</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-header">
+                                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h3>Configuración de Cada Plugin</h3>
+                            </div>
+                            <div class="feature-description">
+                                Al hacer clic en "Configurar", abre drawer o modal con ajustes específicos (inputs, toggles).
+                            </div>
+                            <div class="mockup">
+                                <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; border: 1px solid #dee2e6;">
+                                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                                        <div style="font-size: 2.5rem;">🤖</div>
+                                        <div>
+                                            <h5 style="margin: 0;">AI Predictor - Configuración</h5>
+                                            <p style="font-size: 0.8rem; color: #666; margin: 5px 0;">v1.5.2 • Configuración avanzada</p>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px; font-size: 0.8rem; font-weight: bold;">Modelo ML:</label>
+                                        <select class="input-demo" style="margin: 0;">
+                                            <option>Random Forest</option>
+                                            <option>Neural Network</option>
+                                            <option>Linear Regression</option>
+                                            <option>Decision Tree</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px; font-size: 0.8rem; font-weight: bold;">Ventana de datos (días):</label>
+                                        <input type="number" class="input-demo" value="30" min="7" max="365" style="margin: 0;">
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px; font-size: 0.8rem; font-weight: bold;">Confianza mínima (%):</label>
+                                        <input type="range" min="50" max="99" value="85" style="width: 100%;">
+                                        <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #666;">
+                                            <span>50%</span>
+                                            <span>85%</span>
+                                            <span>99%</span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 20px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-size: 0.8rem; font-weight: bold;">Auto-entrenamiento</span>
+                                            <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                                <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #667eea; transition: .4s; border-radius: 34px;"></span>
+                                            </label>
+                                        </div>
+                                        <p style="font-size: 0.7rem; color: #666; margin-top: 5px;">Entrena automáticamente con nuevos datos cada semana</p>
+                                    </div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="btn" style="flex: 1;">Guardar Configuración</button>
+                                        <button class="btn" style="background: #6c757d;">Restaurar Defecto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            };
+
+            if (contents[section]) {
+                contentArea.innerHTML = contents[section];
+            } else {
+                contentArea.innerHTML = `
+                    <div class="welcome-screen">
+                        <h2>🚧 Sección en Desarrollo</h2>
+                        <p>Esta sección estará disponible próximamente.</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html> 
