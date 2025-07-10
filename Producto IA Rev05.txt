@@ -59,7 +59,7 @@ Descripción original: 2.1 CRUD de proyectos
 •	Panel lateral de ajustes visuales: selector de modo claro/oscuro, ajuste de tamaño de fuente y espaciado.
 •	Vista previa en vivo de los cambios antes de aplicarlos, con botón “Aplicar cambios” y opción “Restaurar valores por defecto”.
 User Story:
-Como analista, quiero crear y organizar varios espacios de trabajo, para separar clientes o líneas de análisis y mantener todo ordenado.
+Como analista, quiero crear y organizar varios espacios de trabajo, para separar clientes o líneas de análisis y mantener todos los dashbaords ordenado.
 INVEST:
 •	Independiente: Operación CRUD sin depender de otros módulos.
 •	Negociable: Límite de proyectos y tags.
